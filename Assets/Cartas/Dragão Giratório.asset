@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0826797fee2f4f2b4b1b53f99dce71e4, type: 3}
+  m_Name: "Drag\xE3o Girat\xF3rio"
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  nomeCarta: "Dag\xE3o Girat\xF3rio"
+  arteCarta: {fileID: 21300000, guid: 8912ac6ac916740d4a8bf30f426a22d1, type: 3}
+  descricaoHabilidade: 
+  classe: 1
+  tipo: 1
+  moral: 2
+  forca: 760
+  magia: 720
+  agilidade: 810
+  inteligencia: 640

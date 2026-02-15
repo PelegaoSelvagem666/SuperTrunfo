@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: a09e1df31b3741549a29395a540dd7b0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cardData: {fileID: 11400000, guid: c2b6c9ca7c9e24c958b2c502c11fe3a9, type: 2}
+  - textoNome: {instanceID: 0}
+  - imagemArte: {instanceID: 0}
+  - textoTipo: {instanceID: 0}
+  - imagemMoral: {instanceID: 0}
+  - textoForca: {instanceID: 0}
+  - textoMagia: {instanceID: 0}
+  - textoAgilidade: {instanceID: 0}
+  - textoInteligencia: {instanceID: 0}
+  - iconeBom: {fileID: 21300000, guid: 6c64c39834227466ba16ba7881758d38, type: 3}
+  - iconeNeutro: {fileID: 21300000, guid: 2cdf8ab0ba3ab7623b651933aad13c86, type: 3}
+  - iconeMal: {fileID: 21300000, guid: 3db39b8edb943b7b996cfcb6fec3eea2, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
