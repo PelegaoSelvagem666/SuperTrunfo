@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Calafrio
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Calafrio
-  arteCarta: {fileID: 21300000, guid: c77209a9c04cf66d180fa8e171bb754c, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: 44fc0fc15f960a717a31e29a3a10712e, type: 3}
   classe: 1
-  tipo: 2
+  tipo1: 0
+  tipo2: 0
   moral: 0
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 560
   magia: 830
   agilidade: 640

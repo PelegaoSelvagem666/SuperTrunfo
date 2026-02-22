@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Absorvel
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Absorvel
-  arteCarta: {fileID: 21300000, guid: 2fafe8f04c8cc4986a1fdd15a45ed909, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: b848b819b80bf872f8a7590d3ca44302, type: 3}
   classe: 2
-  tipo: 6
+  tipo1: 0
+  tipo2: 0
   moral: 0
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 780
   magia: 920
   agilidade: 740

@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: "O Cabe\xE7a"
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "O Cabe\xE7a"
-  arteCarta: {fileID: 21300000, guid: 0eb5caaf16b48ee038b13f0588f0b720, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: db024259f6b471b589f16f69c360782d, type: 3}
   classe: 1
-  tipo: 10
+  tipo1: 0
+  tipo2: 0
   moral: 1
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 620
   magia: 780
   agilidade: 640

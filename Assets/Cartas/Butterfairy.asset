@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Butterfairy
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Butterfairy
-  arteCarta: {fileID: 21300000, guid: f92eb2ddb25aa7c0a97d0b1445767742, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: c15d94328efe5410f8555cd5e0a35732, type: 3}
   classe: 2
-  tipo: 6
+  tipo1: 0
+  tipo2: 0
   moral: 0
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 720
   magia: 880
   agilidade: 910

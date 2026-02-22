@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: "Drag\xE3o Girat\xF3rio"
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "Dag\xE3o Girat\xF3rio"
-  arteCarta: {fileID: 21300000, guid: 8912ac6ac916740d4a8bf30f426a22d1, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: 909878d8e52221491bd676505d34de3d, type: 3}
   classe: 1
-  tipo: 1
+  tipo1: 0
+  tipo2: 0
   moral: 2
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 760
   magia: 720
   agilidade: 810

@@ -9,11 +9,12 @@ public enum CardAttribute
 
 public enum CardClass
 {
-    C, // 0
-    B, // 1
-    A, // 2
-    S, // 3
-    SS // 4
+    SS,
+    S,
+    A,
+    B,
+    C
+
 }
 public enum CardMoral
 {

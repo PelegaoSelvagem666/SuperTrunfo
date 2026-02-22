@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: "Boc\xE3o"
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "Boc\xE3o"
-  arteCarta: {fileID: 21300000, guid: 9f2831ae6a553b10ca1324c0645a9540, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: 9b272678b6538c9bfa04e24917f1acc1, type: 3}
   classe: 1
-  tipo: 10
+  tipo1: 0
+  tipo2: 0
   moral: 1
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 830
   magia: 320
   agilidade: 540

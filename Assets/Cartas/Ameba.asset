@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Ameba
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Ameba
-  arteCarta: {fileID: 21300000, guid: 206b66f15db3a9c67803ca776f2c26ff, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: 4c1ab3213c5afab96ac130bb95094881, type: 3}
   classe: 0
-  tipo: 3
+  tipo1: 0
+  tipo2: 0
   moral: 2
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 420
   magia: 690
   agilidade: 480

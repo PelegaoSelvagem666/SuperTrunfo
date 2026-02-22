@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: "\xC1rvore Ancestral"
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "\xC1rvore Ancestral"
-  arteCarta: {fileID: 21300000, guid: f564ac6a05cf04f75acff88b7216d572, type: 3}
-  descricaoHabilidade: 
+  arteCarta: {fileID: 21300000, guid: 9f596088d887ae179ae2ba503523c5f9, type: 3}
   classe: 1
-  tipo: 6
+  tipo1: 0
+  tipo2: 0
   moral: 0
+  tituloHabilidade: 
+  descricaoHabilidade: 
   forca: 820
   magia: 760
   agilidade: 420
