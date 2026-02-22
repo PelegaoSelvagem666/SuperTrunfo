@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public CardDisplay painelCartaDetalhe; 
     public TextMeshProUGUI textoResultado;
     public TextMeshProUGUI textoAvisoIA;
-
+    public AnimacaoImpacto efeitoChoque;
     private int pontosJogador = 0;
     private int pontosOponente = 0;
 
@@ -41,13 +41,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        instancia = this;
+
         if (painelEscolhaAtributo != null) painelEscolhaAtributo.SetActive(false);
-        if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false); 
+        if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
 
         EmbaralharBaralho();
-        ComprarCartasIniciais();
-        Debug.Log("🎮 A PARTIDA COMEÇOU! É o seu turno de atacar.");
-    }
+        
+        // Inicia a distribuição animada e substitui o ComprarCartasIniciais()
+        StartCoroutine(DistribuirCartasAnimado());
+    }     
 
     public void EmbaralharBaralho()
     {
@@ -60,25 +63,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ComprarCartasIniciais()
+private System.Collections.IEnumerator DistribuirCartasAnimado()
     {
-        for (int i = 0; i < 5; i++) 
+        for (int i = 0; i < 5; i++)
         {
-            GameObject novaCarta = Instantiate(cartaPrefab, maoJogador);
-            CardDisplay display = novaCarta.GetComponent<CardDisplay>();
-            display.cardData = baralhoCompleto[i];
-            display.pertenceAoJogador = true; 
-            display.AtualizarCarta(); 
+            // 1. Cria a carta do Jogador (usa os índices 0, 1, 2, 3, 4)
+            GameObject novaCartaJogador = Instantiate(cartaPrefab, maoJogador);
+            CardDisplay displayJogador = novaCartaJogador.GetComponent<CardDisplay>();
+            displayJogador.cardData = baralhoCompleto[i];
+            displayJogador.pertenceAoJogador = true;
+            displayJogador.AtualizarCarta();
+
+            // 2. Cria a carta do Oponente (usa os índices 5, 6, 7, 8, 9)
+            GameObject novaCartaAdversario = Instantiate(cartaPrefab, maoAdversario);
+            CardDisplay displayAdversario = novaCartaAdversario.GetComponent<CardDisplay>();
+            // Usamos "i + 5" para pegar a próxima carta do baralho para o oponente
+            displayAdversario.cardData = baralhoCompleto[i + 5]; 
+            displayAdversario.pertenceAoJogador = false;
+            displayAdversario.AtualizarCarta();
+
+            // 3. Aguarda 0.25 segundos antes de distribuir o próximo par de cartas
+            yield return new WaitForSeconds(0.25f);
         }
 
-        for (int i = 5; i < 10; i++) 
-        {
-            GameObject novaCarta = Instantiate(cartaPrefab, maoAdversario);
-            CardDisplay display = novaCarta.GetComponent<CardDisplay>();
-            display.cardData = baralhoCompleto[i];
-            display.pertenceAoJogador = false; 
-            display.AtualizarCarta(); 
-        }
+        // Aviso de início após a distribuição terminar
+        Debug.Log("🎮 A PARTIDA COMEÇOU! É o seu turno de atacar.");
     }
 
 // NOVO: Função exclusiva para o clique (apenas olhar a carta)
@@ -232,6 +241,7 @@ private void ResolverDuelo(CardDisplay cartaJogador, CardDisplay cartaOponente, 
     {
         int valorJogador = PegarValorAtributo(cartaJogador.cardData, atributo);
         int valorOponente = PegarValorAtributo(cartaOponente.cardData, atributo);
+        if (efeitoChoque != null) efeitoChoque.Explodir();
         if (textoAvisoIA != null) textoAvisoIA.gameObject.SetActive(false);
         
         string mensagemDeCombate = "";

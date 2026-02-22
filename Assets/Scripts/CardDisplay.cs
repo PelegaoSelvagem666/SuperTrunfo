@@ -190,8 +190,8 @@ public void OnPointerDown(PointerEventData eventData)
 
         if (eventData.position.y > Screen.height * 0.4f)
         {
-            transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-            transform.localScale = new Vector3(0.65f, 0.65f, 0.65f); 
+            transform.position = new Vector3((Screen.width / 2) - 250, Screen.height / 2, 0);
+            transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
             
             // NOVO: Chama a arena direto, em vez de simular um clique
             GameManager.instancia.ReceberCartaNaArena(this);
