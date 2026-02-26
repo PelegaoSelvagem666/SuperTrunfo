@@ -301,26 +301,26 @@ MonoBehaviour:
   textoHabDesc: {fileID: 0}
   listaMolduras:
   - classe: 4
-    molduraSprite: {fileID: 21300000, guid: b05a9b4c48a19f2f68acf760b0dd29db, type: 3}
+    molduraSprite: {fileID: 21300000, guid: 865d7d374d8c63b8390b8179ed1cc009, type: 3}
   - classe: 3
-    molduraSprite: {fileID: 21300000, guid: b05a9b4c48a19f2f68acf760b0dd29db, type: 3}
+    molduraSprite: {fileID: 21300000, guid: e8a2e49acca6f438abb89605ed0851ba, type: 3}
   - classe: 2
-    molduraSprite: {fileID: 21300000, guid: b05a9b4c48a19f2f68acf760b0dd29db, type: 3}
+    molduraSprite: {fileID: 21300000, guid: 7cc18e2acb58e17578c2c2de3db08eaf, type: 3}
   - classe: 1
-    molduraSprite: {fileID: 21300000, guid: b05a9b4c48a19f2f68acf760b0dd29db, type: 3}
+    molduraSprite: {fileID: 21300000, guid: bcc9415e81eb6553fa198c0739d4ae4a, type: 3}
   - classe: 0
-    molduraSprite: {fileID: 21300000, guid: b05a9b4c48a19f2f68acf760b0dd29db, type: 3}
+    molduraSprite: {fileID: 21300000, guid: a05a609ed51e7604f82e5923fce86ac9, type: 3}
   listaLetras:
   - classe: 0
-    letraSprite: {fileID: 21300000, guid: 42e424c1096379bceb8c88edb4baf45d, type: 3}
+    letraSprite: {fileID: 21300000, guid: 37fdd9cda3e43c561ab8b0aa140c00ce, type: 3}
   - classe: 1
-    letraSprite: {fileID: 21300000, guid: 6af231fd541588591b5652e30d43a6a5, type: 3}
+    letraSprite: {fileID: 21300000, guid: c47ebf1d7b5da4feda6a23a52f38252d, type: 3}
   - classe: 2
-    letraSprite: {fileID: 21300000, guid: 8dad73e06dfe3f0bd87902fe285f4d8a, type: 3}
+    letraSprite: {fileID: 21300000, guid: a5b8db4d72f031c4aa8bd3f004e7615c, type: 3}
   - classe: 3
-    letraSprite: {fileID: 21300000, guid: a5b158813cac727359ba45cd83d2323d, type: 3}
+    letraSprite: {fileID: 21300000, guid: 3ead9cdfa48977926ab8b6bc5b809fdb, type: 3}
   - classe: 4
-    letraSprite: {fileID: 21300000, guid: dc3ac43e5bc143ae5a80743989db7c95, type: 3}
+    letraSprite: {fileID: 21300000, guid: b23c45e036fb47b909327dc0fde3e197, type: 3}
   iconesTipos: []
   iconeBom: {fileID: 21300000, guid: 6c64c39834227466ba16ba7881758d38, type: 3}
   iconeNeutro: {fileID: 21300000, guid: 2cdf8ab0ba3ab7623b651933aad13c86, type: 3}

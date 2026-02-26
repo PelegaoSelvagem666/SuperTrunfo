@@ -4,7 +4,6 @@ using TMPro;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-// Substitua a linha da classe por esta:
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Dados")]
@@ -41,6 +40,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public struct TipoIconeMapping { public CardType tipo; public Sprite icone; }
     public List<TipoIconeMapping> iconesTipos;
 
+    [Header("Ícones Morais")]
     public Sprite iconeBom;
     public Sprite iconeNeutro;
     public Sprite iconeMal;
@@ -50,12 +50,11 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private int indiceOriginal;
     private CanvasGroup canvasGroup;
 
-  void Start()
+    void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
-        // CORREÇÃO: A carta decide se terá verso apenas uma vez, ao ser gerada na mão
         if (imagemVerso != null)
         {
             imagemVerso.gameObject.SetActive(!pertenceAoJogador);
@@ -67,9 +66,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void AtualizarCarta()
     {
         if (cardData == null) return;
-
-        // Se o verso estiver ligado, o código para aqui e economiza processamento.
-        // Se o GameManager desligou o verso na arena, o código prossegue e renderiza a frente.
         if (imagemVerso != null && imagemVerso.gameObject.activeSelf) return;
 
         if (camadaArte != null) camadaArte.sprite = cardData.arteCarta;
@@ -99,47 +95,39 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (imagemTipo2 != null) imagemTipo2.sprite = GetIconeTipo(cardData.tipo2);
     }
 
-    Sprite GetMolduraPorClasse(CardClass classeProcurada)
+    private Sprite GetMolduraPorClasse(CardClass classeProcurada)
     {
         foreach (var item in listaMolduras) { if (item.classe == classeProcurada) return item.molduraSprite; }
         return null;
     }
 
-    Sprite GetLetraPorClasse(CardClass classeProcurada)
+    private Sprite GetLetraPorClasse(CardClass classeProcurada)
     {
         foreach (var item in listaLetras) { if (item.classe == classeProcurada) return item.letraSprite; }
         return null;
     }
 
-    Sprite GetIconeTipo(CardType tipoProcurado)
+    private Sprite GetIconeTipo(CardType tipoProcurado)
     {
         foreach (var mapping in iconesTipos) { if (mapping.tipo == tipoProcurado) return mapping.icone; }
         return null;
     }
 
-public void FuiClicada()
-    {
-        // Regra 1: Se a carta é minha, sempre posso inspecionar.
-        bool ehMinhaCarta = pertenceAoJogador;
+    // --- INTERAÇÕES DE MOUSE E CLIQUE ---
 
-        // Regra 2: Se é do oponente, só posso inspecionar se ela já foi revelada na arena.
-        // Sabemos que ela foi revelada se o objeto do verso (a lava/portal) estiver desligado.
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        bool ehMinhaCarta = pertenceAoJogador;
         bool oponenteRevelado = !pertenceAoJogador && imagemVerso != null && !imagemVerso.gameObject.activeSelf;
 
-        // Se qualquer uma das duas regras for verdadeira, chama o painel gigante.
         if (ehMinhaCarta || oponenteRevelado)
         {
             GameManager.instancia.InspecionarCarta(cardData);
         }
     }
-public void OnPointerDown(PointerEventData eventData)
-    {
-        FuiClicada();
-    }
-    // SUBSTITUA a função OnPointerClick por esta nova:
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // Levanta a carta SOMENTE se ela estiver fisicamente dentro da área da mão do jogador
         if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador)
         {
             transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
@@ -149,7 +137,6 @@ public void OnPointerDown(PointerEventData eventData)
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // Retorna ao normal com a mesma restrição
         if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador)
         {
             transform.localScale = Vector3.one;
@@ -157,10 +144,11 @@ public void OnPointerDown(PointerEventData eventData)
         }
     }
 
+    // --- SISTEMA DE ARRASTAR E SOLTAR (DRAG & DROP) ---
+
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!pertenceAoJogador) return;
-        if (GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
+        if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
 
         parentOriginal = transform.parent;
         indiceOriginal = transform.GetSiblingIndex();
@@ -168,23 +156,19 @@ public void OnPointerDown(PointerEventData eventData)
 
         transform.SetParent(transform.root);
         canvasGroup.blocksRaycasts = false;
-
-        // NOVO: Encolhe a carta IMEDIATAMENTE quando você começa a arrastar!
         transform.localScale = new Vector3(0.65f, 0.65f, 0.65f); 
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (!pertenceAoJogador) return;
-        if (GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
+        if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
 
         transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!pertenceAoJogador) return;
-        if (GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
+        if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
 
         canvasGroup.blocksRaycasts = true;
 
@@ -193,7 +177,6 @@ public void OnPointerDown(PointerEventData eventData)
             transform.position = new Vector3((Screen.width / 2) - 250, Screen.height / 2, 0);
             transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
             
-            // NOVO: Chama a arena direto, em vez de simular um clique
             GameManager.instancia.ReceberCartaNaArena(this);
         }
         else
@@ -204,4 +187,4 @@ public void OnPointerDown(PointerEventData eventData)
             transform.localScale = Vector3.one; 
         }
     }
- }
+}

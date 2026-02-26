@@ -1,4 +1,3 @@
-// GameEnums.cs
 public enum CardAttribute
 {
     Forca,
@@ -14,14 +13,13 @@ public enum CardClass
     A,
     B,
     C
-
 }
+
 public enum CardMoral
 {
     Bom,
     Neutro,
-    Mal,
-    
+    Mal
 }
 
 public enum CardType
@@ -39,6 +37,5 @@ public enum CardType
     Bestial,
     Cosmico,
     Espirito,
-    // Adicione seus tipos aqui
     Nenhum
 }

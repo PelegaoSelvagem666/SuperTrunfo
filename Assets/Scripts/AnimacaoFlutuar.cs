@@ -8,7 +8,7 @@ public class AnimacaoFlutuar : MonoBehaviour
     
     private float desvioAleatorio;
     private Quaternion rotacaoInicial;
-    private bool estavaNaMao; // Rastreador para saber quando a carta mudou de lugar
+    private bool estavaNaMao;
 
     void Start()
     {
@@ -25,20 +25,16 @@ public class AnimacaoFlutuar : MonoBehaviour
     {
         if (GameManager.instancia == null) return;
 
-        // Verifica fisicamente onde a carta está neste exato frame
         bool naMao = (transform.parent == GameManager.instancia.maoJogador || transform.parent == GameManager.instancia.maoAdversario);
 
         if (naMao)
         {
-            // Se está na mão, flutua suavemente
             float anguloZ = Mathf.Sin((Time.time + desvioAleatorio) * velocidade) * amplitudeRotacao;
             transform.localRotation = rotacaoInicial * Quaternion.Euler(0f, 0f, anguloZ);
             estavaNaMao = true;
         }
         else if (estavaNaMao)
         {
-            // Se ela acabou de sair da mão (foi arrastada pra mesa), endireita a carta imediatamente!
-            // Fazemos isso apenas UMA VEZ para não bloquear o efeito de pilha bagunçada do cemitério depois.
             transform.localRotation = rotacaoInicial;
             estavaNaMao = false;
         }
