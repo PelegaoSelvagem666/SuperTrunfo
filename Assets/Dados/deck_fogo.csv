@@ -1,0 +1,26 @@
+NomeDaCarta;Tipo;Moral;TituloHabilidade;DescricaoHabilidade;Forca;Magia;Agilidade;Inteligencia;NomeDoSprite
+Senhor das Cinzas;Fogo;Mau;Soberania Ígnea;Controla o campo de batalha com poder absoluto das chamas.;950;1000;750;900;SenhorDasCinzas
+Dragão Solar;Fogo;Bom;Sopro do Astro Rei;Incinera inimigos com a fúria de uma estrela.;1000;900;950;850;DragaoSolar
+Efígie do Vulcão;Fogo;Neutro;Erupção Iminente;Desperta a fúria da terra em forma de lava.;900;850;400;850;EfigieDoVulcao
+Sacerdotisa da Chama;Fogo;Bom;Bênção do Fogo;Purifica aliados e queima adversários.;300;1000;900;950;SacerdotisaDaChama
+Cão Infernal;Fogo;Mau;Mordida de Enxofre;Causa queimaduras severas a cada ataque.;880;700;900;600;CãoInfernal
+Elemental de Lava;Fogo;Neutro;Corpo Derretido;Reflete parte do dano físico recebido.;950;800;100;600;ElementalDeLava
+Piromante Renegado;Fogo;Mau;Chama Caótica;Lança fogo sem se importar com os danos colaterais.;400;900;700;800;PiromanteRenegado
+Fênix Jovem;Fogo;Bom;Renascimento;Retorna das cinzas uma vez por combate.;500;850;850;600;FenixJovem
+Cavaleiro da Fornalha;Fogo;Neutro;Marreta Magmática;Destrói a armadura do oponente com o calor.;850;400;600;650;CavaleiroDaFornalha
+Espírito da Lareira;Fogo;Bom;Calor Confortante;Restaura pontos de atributo dos aliados próximos.;200;950;600;850;EspiritoDaLareira
+Diabrete Incendiário;Fogo;Mau;Fogo Fátuo;Confunde o inimigo antes de queimá-lo.;300;600;850;400;DiabreteIncendiario
+Salamandra de Magma;Fogo;Neutro;Trilha Escaldante;Deixa um rastro de fogo por onde passa.;600;500;500;300;SalamandraDeMagma
+Guarda Tocha;Fogo;Bom;Iluminar o Caminho;Revela habilidades ocultas do adversário.;700;200;500;400;GuardaTocha
+Gosma Fervente;Fogo;Neutro;Absorção Térmica;Ganha força ao ser atacado por fogo.;400;700;100;500;GosmaFervente
+Mago Aprendiz;Fogo;Bom;Faísca Mágica;Magia instável com resultados imprevisíveis.;100;800;400;700;MagoAprendiz
+Morcego de Fumaça;Fogo;Mau;Cegueira de Fuligem;Diminui a agilidade do inimigo temporariamente.;200;400;900;200;MorcegoDeFumaça
+Rocha Candente;Fogo;Neutro;Esmagamento Quente;Um ataque lento mas devastador.;800;500;50;300;RochaCandente
+Faísca Viva;Fogo;Neutro;Choque Estático;Ataque rápido que ignora pequenas armaduras.;50;400;600;100;FaiscaViva
+Goblin Carvoeiro;Fogo;Mau;Arremesso de Brasa;Ataca a distância e foge rapidamente.;300;100;500;200;GoblinCarvoeiro
+Vagalume Gigante;Fogo;Bom;Brilho Ofuscante;Cega o inimigo e garante esquiva.;100;300;800;100;VagalumeGigante
+Cenoura Flambada;Fogo;Neutro;Raízes Quentes;Aumenta a inteligência temporariamente.;50;100;100;800;CenouraFlambada
+Fósforo Amaldiçoado;Fogo;Mau;Canhão de Vidro;Destrói Cartas S se lutar com Magia.;10;900;10;50;FosforoAmaldicoado
+Rato das Cinzas;Fogo;Neutro;Fuga Rápida;Garante alta taxa de evasão.;200;50;700;300;RatoDasCinzas
+Lenhador Queimado;Fogo;Mau;Machadada Brutal;Um golpe pesado e cheio de raiva.;600;50;200;100;LenhadorQueimado
+Vela Derretida;Fogo;Bom;Cera Escaldante;Prende o inimigo e o queima aos poucos.;0;600;0;500;VelaDerretida

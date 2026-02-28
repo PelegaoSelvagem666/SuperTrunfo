@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // <-- ADICIONADO: Necessário para usar Image
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class GameManager : MonoBehaviour
     [Header("Configurações do Baralho")]
     public List<CardData> baralhoCompleto;
     public GameObject cartaPrefab;
-    private int indiceCompra = 0; // Diz qual carta do baralho de 50 vamos comprar agora
+    private int indiceCompra = 0;
 
     [Header("Áreas do Tabuleiro")]
     public Canvas canvasPrincipal;
@@ -21,13 +22,24 @@ public class GameManager : MonoBehaviour
     [Header("Interface de Batalha")]
     public GameObject painelEscolhaAtributo; 
     public CardDisplay painelCartaDetalhe; 
-    public TextMeshProUGUI textoResultado;
+    public TextMeshProUGUI textoResultado; 
     public TextMeshProUGUI textoAvisoIA;
     public AnimacaoImpacto efeitoChoque;
+    public GameObject fundoInspecao;
+    
+    // --- NOVA SEÇÃO DE IMAGENS ---
+    [Header("Imagens de Fim de Rodada/Jogo")]
+    public Image imgVitoriaRodada;
+    public Image imgDerrotaRodada;
+    public Image imgEmpateRodada; // Opcional
+    public Image imgVitoriaJogo;
+    public Image imgDerrotaJogo;
+    public Image imgEmpateJogo;   // Opcional
+    // -----------------------------
     
     [Header("Placares Visuais")]
-    public TextMeshProUGUI placarPontos;   // Pontos da rodada atual (até 3)
-    public TextMeshProUGUI placarVitorias; // Rodadas vencidas no jogo (Melhor de 5)
+    public TextMeshProUGUI placarPontos;   
+    public TextMeshProUGUI placarVitorias; 
     
     [Header("Estado do Jogo")]
     public bool turnoDoJogador = true; 
@@ -36,10 +48,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Visualizador de Cemitério")]
     public GameObject painelVisualizadorCemiterio;
-    public Transform conteudoGradeCemiterio; // O "Content" do Scroll View
-    public GameObject prefabIconeCemiterio;  // O botão miniatura que criamos no Passo 2
+    public Transform conteudoGradeCemiterio; 
+    public GameObject prefabIconeCemiterio;  
 
-    // Variáveis de Placar Duplo
     private int pontosJogador = 0;
     private int pontosOponente = 0;
     private int vitoriasJogador = 0;
@@ -58,6 +69,8 @@ public class GameManager : MonoBehaviour
         if (painelEscolhaAtributo != null) painelEscolhaAtributo.SetActive(false);
         if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
 
+        DesativarImagensDeResultado(); // Esconde as imagens de vitória/derrota ao iniciar
+
         vitoriasJogador = 0;
         vitoriasOponente = 0;
         pontosJogador = 0;
@@ -68,6 +81,18 @@ public class GameManager : MonoBehaviour
         EmbaralharBaralho();
         StartCoroutine(DistribuirCartasAnimado());
     }     
+
+    // Função auxiliar para desligar todas as imagens da tela
+    private void DesativarImagensDeResultado()
+    {
+        if (imgVitoriaRodada != null) imgVitoriaRodada.gameObject.SetActive(false);
+        if (imgDerrotaRodada != null) imgDerrotaRodada.gameObject.SetActive(false);
+        if (imgEmpateRodada != null) imgEmpateRodada.gameObject.SetActive(false);
+        if (imgVitoriaJogo != null) imgVitoriaJogo.gameObject.SetActive(false);
+        if (imgDerrotaJogo != null) imgDerrotaJogo.gameObject.SetActive(false);
+        if (imgEmpateJogo != null) imgEmpateJogo.gameObject.SetActive(false);
+        if (textoResultado != null) textoResultado.gameObject.SetActive(false);
+    }
 
     public void EmbaralharBaralho()
     {
@@ -84,25 +109,23 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            if (indiceCompra >= baralhoCompleto.Count) break; // Segurança caso o baralho acabe
+            if (indiceCompra >= baralhoCompleto.Count) break;
 
-            // 1. Compra carta do Jogador
             GameObject novaCartaJogador = Instantiate(cartaPrefab, maoJogador);
             CardDisplay displayJogador = novaCartaJogador.GetComponent<CardDisplay>();
             displayJogador.cardData = baralhoCompleto[indiceCompra];
             displayJogador.pertenceAoJogador = true;
             displayJogador.AtualizarCarta();
-            indiceCompra++; // Move o marcador do baralho
+            indiceCompra++; 
 
             if (indiceCompra >= baralhoCompleto.Count) break;
 
-            // 2. Compra carta do Oponente
             GameObject novaCartaAdversario = Instantiate(cartaPrefab, maoAdversario);
             CardDisplay displayAdversario = novaCartaAdversario.GetComponent<CardDisplay>();
             displayAdversario.cardData = baralhoCompleto[indiceCompra]; 
             displayAdversario.pertenceAoJogador = false;
             displayAdversario.AtualizarCarta();
-            indiceCompra++; // Move o marcador do baralho
+            indiceCompra++; 
 
             yield return new WaitForSeconds(0.25f);
         }
@@ -127,25 +150,48 @@ public class GameManager : MonoBehaviour
 
     public void InspecionarCarta(CardData dados)
     {
-        // 1. Removemos a trava do "jogoPausado", pois queremos inspecionar cartas a qualquer momento!
         if (painelCartaDetalhe == null) return;
 
+        // 1. Liga o fundo clicável (a parede de vidro escuro)
+        if (fundoInspecao != null) 
+        {
+            fundoInspecao.SetActive(true);
+            fundoInspecao.transform.SetAsLastSibling(); 
+        }
+
+        // 2. Puxa a mão do jogador para a FRENTE do fundo!
+        if (maoJogador != null) maoJogador.SetAsLastSibling();
+
+        // --- NOVIDADE AQUI: Puxa as cartas que estão no Campo/Arena para a frente ---
+        if (cartaDoJogadorNaArena != null) cartaDoJogadorNaArena.transform.SetAsLastSibling();
+        if (cartaAtacanteIA != null) cartaAtacanteIA.transform.SetAsLastSibling();
+
+        // 3. Verifica o Cemitério
+        // Se o visualizador já estiver aberto, ele fica na frente.
+        if (painelVisualizadorCemiterio != null && painelVisualizadorCemiterio.activeSelf)
+        {
+            painelVisualizadorCemiterio.transform.SetAsLastSibling();
+        }
+        else
+        {
+            // Se estiver fechado, puxa os montinhos da mesa para permitir o clique único
+            if (cemiterioJogador != null) cemiterioJogador.SetAsLastSibling(); 
+            if (cemiterioOponente != null) cemiterioOponente.SetAsLastSibling(); 
+        }
+
+        // 4. Liga a carta detalhada por cima de TODOS os outros elementos
         painelCartaDetalhe.gameObject.SetActive(true);
-        
-        // 2. Esta linha nova garante que a carta gigante pule para a FRENTE do cemitério
         painelCartaDetalhe.transform.SetAsLastSibling(); 
-        
         painelCartaDetalhe.cardData = dados;
         painelCartaDetalhe.AtualizarCarta();
     }
-
     public void ReceberCartaNaArena(CardDisplay cartaDoJogador) 
     {
         if (jogoPausado) return;
-
         cartaDoJogadorNaArena = cartaDoJogador; 
 
         if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
+        if (fundoInspecao != null) fundoInspecao.SetActive(false);
 
         if (turnoDoJogador)
         {
@@ -208,7 +254,6 @@ public class GameManager : MonoBehaviour
     public void TurnoDaIA()
     {
         jogoPausado = false; 
-
         if (maoAdversario.childCount == 0) return; 
 
         CardDisplay cartaEscolhida = null;
@@ -297,6 +342,7 @@ public class GameManager : MonoBehaviour
 
     private System.Collections.IEnumerator RotinaFimDeTurno(CardDisplay cartaJogador, CardDisplay cartaOponente, string mensagem)
     {
+        // Mostra o texto com os pontos (ex: 500 x 300) do duelo
         if (textoResultado != null)
         {
             textoResultado.text = mensagem;
@@ -314,7 +360,6 @@ public class GameManager : MonoBehaviour
         cartaDoJogadorNaArena = null;
         cartaAtacanteIA = null;
 
-        // Verifica se a rodada acabou (alguém fez 3 pontos ou a mão esvaziou)
         if (pontosJogador >= 3 || pontosOponente >= 3 || maoJogador.childCount == 0 || maoAdversario.childCount == 0)
         {
             StartCoroutine(EncerrarRodada());
@@ -326,49 +371,70 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // NOVA COROUTINE: Reinicia a mesa para uma nova rodada
-    private System.Collections.IEnumerator EncerrarRodada()
+   private System.Collections.IEnumerator EncerrarRodada()
     {
         jogoPausado = true;
+        DesativarImagensDeResultado(); // Limpa a tela
         
-        string msgRodada = "";
-        if (pontosJogador > pontosOponente) { vitoriasJogador++; msgRodada = "VOCÊ VENCEU A RODADA!"; turnoDoJogador = true; }
-        else if (pontosOponente > pontosJogador) { vitoriasOponente++; msgRodada = "A IA VENCEU A RODADA!"; turnoDoJogador = false; }
-        else { msgRodada = "RODADA EMPATADA!"; }
+        // 1. Atualiza as vitórias silenciosamente primeiro
+        if (pontosJogador > pontosOponente) { vitoriasJogador++; turnoDoJogador = true; }
+        else if (pontosOponente > pontosJogador) { vitoriasOponente++; turnoDoJogador = false; }
         
         AtualizarPlacares();
 
-        if (textoResultado != null)
-        {
-            textoResultado.text = msgRodada;
-            textoResultado.gameObject.SetActive(true);
-        }
-        
-        yield return new WaitForSeconds(3f);
-        if (textoResultado != null) textoResultado.gameObject.SetActive(false);
-
-        // Limpa as cartas que sobraram na mão
-        LimparMaos();
-        
-        // Espera as cartas caírem no cemitério
-        yield return new WaitForSeconds(1f); 
-
-        // Checa se alguém já ganhou a Melhor de 5, ou se acabou o baralho inteiro
+        // 2. CHECA SE O JOGO ACABOU AGORA (Antes de mostrar a imagem de rodada!)
         if (vitoriasJogador >= 3 || vitoriasOponente >= 3 || indiceCompra >= baralhoCompleto.Count)
         {
             FinalizarJogo();
+            yield break; // Encerra essa rotina aqui mesmo, indo direto pro Game Over
         }
-        else
-        {
-            // Começa nova rodada
-            pontosJogador = 0;
-            pontosOponente = 0;
-            AtualizarPlacares();
-            StartCoroutine(DistribuirCartasAnimado());
-        }
-    }
 
-    // NOVA FUNÇÃO: Joga tudo que sobrou na mão fora
+        // 3. SE O JOGO NÃO ACABOU, mostra a imagem de fim de rodada
+        if (pontosJogador > pontosOponente) 
+        { 
+            if (imgVitoriaRodada != null) { 
+                imgVitoriaRodada.gameObject.SetActive(true); 
+                imgVitoriaRodada.transform.parent.SetAsLastSibling(); // Puxa o PainelResultados pra frente de tudo
+                imgVitoriaRodada.transform.SetAsLastSibling(); 
+            }
+        }
+        else if (pontosOponente > pontosJogador) 
+        { 
+            if (imgDerrotaRodada != null) { 
+                imgDerrotaRodada.gameObject.SetActive(true); 
+                imgDerrotaRodada.transform.parent.SetAsLastSibling(); 
+                imgDerrotaRodada.transform.SetAsLastSibling(); 
+            }
+        }
+        else 
+        { 
+            if (imgEmpateRodada != null) { 
+                imgEmpateRodada.gameObject.SetActive(true); 
+                imgEmpateRodada.transform.parent.SetAsLastSibling(); 
+                imgEmpateRodada.transform.SetAsLastSibling(); 
+            }
+            else if (textoResultado != null) { 
+                textoResultado.text = "RODADA EMPATADA!"; 
+                textoResultado.gameObject.SetActive(true); 
+                textoResultado.transform.SetAsLastSibling();
+            }
+        }
+        
+        // Espera a imagem ficar na tela
+        yield return new WaitForSeconds(3f);
+        
+        DesativarImagensDeResultado(); // Esconde a imagem
+
+        LimparMaos();
+        yield return new WaitForSeconds(1f); 
+
+        // Começa nova rodada
+        pontosJogador = 0;
+        pontosOponente = 0;
+        AtualizarPlacares();
+        StartCoroutine(DistribuirCartasAnimado());
+    }
+// NOVA FUNÇÃO: Joga tudo que sobrou na mão fora
     private void LimparMaos()
     {
         CardDisplay[] cartasJogador = maoJogador.GetComponentsInChildren<CardDisplay>();
@@ -383,31 +449,55 @@ public class GameManager : MonoBehaviour
             EnviarParaCemiterio(carta, cemiterioOponente);
         }
     }
-
     private void FinalizarJogo()
     {
         jogoPausado = true; 
+        DesativarImagensDeResultado();
         
-        string msgFinal = "";
-        if (vitoriasJogador > vitoriasOponente) msgFinal = "VITÓRIA SUPREMA!\nVocê venceu o jogo!";
-        else if (vitoriasOponente > vitoriasJogador) msgFinal = "GAME OVER\nA IA venceu o jogo!";
-        else msgFinal = "EMPATE TÉCNICO!";
+        // RAIO-X 1: Verifica se o código realmente chegou aqui e qual é o placar
+        Debug.Log($"🚨 FIM DE JOGO ACIONADO! Placar Final -> Você: {vitoriasJogador} x {vitoriasOponente} IA");
 
-        if (textoResultado != null)
+        if (vitoriasJogador > vitoriasOponente)
         {
-            textoResultado.text = msgFinal;
-            textoResultado.gameObject.SetActive(true);
-            textoResultado.transform.SetAsLastSibling(); 
+            // RAIO-X 2: Verifica se ele detectou a vitória
+            Debug.Log("🏆 O código decidiu que VOCÊ VENCEU. Tentando ligar a imagem de Vitória...");
+            AtivarImagem(imgVitoriaJogo);
         }
-        
-        Debug.Log(msgFinal.Replace("\n", " "));
+        else if (vitoriasOponente > vitoriasJogador)
+        {
+            // RAIO-X 3: Verifica se ele detectou a derrota
+            Debug.Log("💀 O código decidiu que a IA VENCEU. Tentando ligar a imagem de Derrota...");
+            AtivarImagem(imgDerrotaJogo);
+        }
+        else
+        {
+            Debug.Log("⚖️ O código decidiu que foi EMPATE.");
+            if (imgEmpateJogo != null) AtivarImagem(imgEmpateJogo);
+            else if (textoResultado != null) { textoResultado.text = "EMPATE TÉCNICO!"; textoResultado.gameObject.SetActive(true); textoResultado.transform.SetAsLastSibling(); }
+        }
     }
-
-    private void EnviarParaCemiterio(CardDisplay carta, Transform cemiterio)
+// --- FUNÇÃO MÁGICA ---
+    // Essa função garante que o painel pai e a imagem liguem e pulem pra frente de tudo
+    private void AtivarImagem(Image img)
+    {
+        if (img != null)
+        {
+            // Puxa o painel pai pra frente de tudo e liga ele
+            if (img.transform.parent != null) 
+            {
+                img.transform.parent.gameObject.SetActive(true);
+                img.transform.parent.SetAsLastSibling();
+            }
+            
+            // Liga a imagem em si
+            img.gameObject.SetActive(true);
+            img.transform.SetAsLastSibling();
+        }
+    }
+private void EnviarParaCemiterio(CardDisplay carta, Transform cemiterio)
     {
         if (carta == null || cemiterio == null) return;
         
-        // CORREÇÃO DO GLITCH: Garante que a carta fique de frente no cemitério
         if (carta.imagemVerso != null) 
         {
             carta.imagemVerso.gameObject.SetActive(false);
@@ -424,15 +514,30 @@ public class GameManager : MonoBehaviour
         CanvasGroup cg = carta.GetComponent<CanvasGroup>();
         if (cg != null) cg.blocksRaycasts = false;
     }
+
     public void AbrirCemiterio(bool ehCemiterioJogador)
     {
-        // Pausa o jogo para evitar que cartas sejam arrastadas no fundo
+        // 1. TRAVA DE SEGURANÇA: Se o painel já estiver aberto, ignora cliques vazados
+        if (painelVisualizadorCemiterio != null && painelVisualizadorCemiterio.activeSelf) return;
+
+        // Limpa qualquer carta gigante da tela antes de abrir o cemitério
+        FecharInspecao(); 
+
         jogoPausado = true;
 
-        painelVisualizadorCemiterio.SetActive(true);
-        painelVisualizadorCemiterio.transform.SetAsLastSibling(); 
+        // 2. LIGA O FUNDO BLOQUEADOR: Impede de clicar no outro cemitério ou nas cartas
+        if (fundoInspecao != null) 
+        {
+            fundoInspecao.SetActive(true);
+            fundoInspecao.transform.SetAsLastSibling(); 
+        }
 
-        // 1. Limpa a lista antiga
+        if (painelVisualizadorCemiterio != null)
+        {
+            painelVisualizadorCemiterio.SetActive(true);
+            painelVisualizadorCemiterio.transform.SetAsLastSibling(); 
+        }
+
         foreach (Transform filho in conteudoGradeCemiterio)
         {
             Destroy(filho.gameObject);
@@ -440,41 +545,41 @@ public class GameManager : MonoBehaviour
 
         Transform cemiterioAlvo = ehCemiterioJogador ? cemiterioJogador : cemiterioOponente;
 
-        // 2. Lê cada carta e cria uma cópia visual na lista
         foreach (Transform filho in cemiterioAlvo)
         {
             CardDisplay cartaNoCemiterio = filho.GetComponent<CardDisplay>();
             
             if (cartaNoCemiterio != null && cartaNoCemiterio.cardData != null)
             {
-                // MUDANÇA PRINCIPAL: Instancia o PREFAB DA CARTA COMPLETA
-                // (Você vai precisar arrastar seu prefab 'CartaVisual' para o slot no Inspector)
                 GameObject novaCarta = Instantiate(prefabIconeCemiterio, conteudoGradeCemiterio);
-                
-                // Configura o CardDisplay da nova cópia
                 CardDisplay displayNovaCarta = novaCarta.GetComponent<CardDisplay>();
                 if (displayNovaCarta != null)
                 {
                     displayNovaCarta.cardData = cartaNoCemiterio.cardData;
-                    
-                    // TRUQUE: Definimos 'pertenceAoJogador = true' para garantir que a carta
-                    // apareça virada para cima e que o clique para inspecionar funcione.
-                    // Como 'jogoPausado' está true, ela não poderá ser arrastada.
                     displayNovaCarta.pertenceAoJogador = true; 
-                    
                     displayNovaCarta.AtualizarCarta();
                 }
-                // Não precisamos mais adicionar botão via código, o próprio CardDisplay já cuida do clique!
             }
         }
     }
 
+    // --- FUNÇÃO QUE ESTAVA FALTANDO ---
+    // Universal: Fecha a carta gigante, o cemitério e o fundo escuro de uma vez
+    public void FecharInspecao()
+    {
+        if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
+        if (painelVisualizadorCemiterio != null) painelVisualizadorCemiterio.SetActive(false); 
+        if (fundoInspecao != null) fundoInspecao.SetActive(false);
+        
+        jogoPausado = false; 
+    }
+
     public void FecharCemiterio()
     {
-        painelVisualizadorCemiterio.SetActive(false);
-        // Despausa o jogo ao fechar o painel
-        jogoPausado = false;
+        // Apenas chama a função universal de fechar
+        FecharInspecao();
     }
+
     public void ClicarCemiterioJogador() { AbrirCemiterio(true); }
     public void ClicarCemiterioOponente() { AbrirCemiterio(false); }
 }

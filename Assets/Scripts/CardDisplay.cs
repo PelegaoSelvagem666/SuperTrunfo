@@ -19,7 +19,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     [Header("Textos e Ícones")]
     public TextMeshProUGUI textoNome;
     public Image imagemTipo1;
-    public Image imagemTipo2;
+    public Image imagemTipo2; 
     public Image imagemMoral;
     public TextMeshProUGUI textoForca;
     public TextMeshProUGUI textoMagia;
@@ -36,6 +36,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public struct ClassLetterMapping { public CardClass classe; public Sprite letraSprite; }
     public List<ClassLetterMapping> listaLetras;
 
+    // VOLTAMOS COM A LISTA AQUI!
     [System.Serializable]
     public struct TipoIconeMapping { public CardType tipo; public Sprite icone; }
     public List<TipoIconeMapping> iconesTipos;
@@ -55,11 +56,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup == null) canvasGroup = gameObject.AddComponent<CanvasGroup>();
 
-        if (imagemVerso != null)
-        {
-            imagemVerso.gameObject.SetActive(!pertenceAoJogador);
-        }
-
+        if (imagemVerso != null) imagemVerso.gameObject.SetActive(!pertenceAoJogador);
         if (cardData != null) AtualizarCarta();
     }
 
@@ -87,12 +84,12 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             {
                 case CardMoral.Bom: imagemMoral.sprite = iconeBom; break;
                 case CardMoral.Neutro: imagemMoral.sprite = iconeNeutro; break;
-                case CardMoral.Mal: imagemMoral.sprite = iconeMal; break;
+                case CardMoral.Mau: imagemMoral.sprite = iconeMal; break;
             }
         }
 
-        if (imagemTipo1 != null) imagemTipo1.sprite = GetIconeTipo(cardData.tipo1);
-        if (imagemTipo2 != null) imagemTipo2.sprite = GetIconeTipo(cardData.tipo2);
+        // Puxa o ícone baseado no Enum da carta
+        if (imagemTipo1 != null) imagemTipo1.sprite = GetIconeTipo(cardData.tipo); 
     }
 
     private Sprite GetMolduraPorClasse(CardClass classeProcurada)
@@ -107,84 +104,18 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         return null;
     }
 
+    // Método restaurado
     private Sprite GetIconeTipo(CardType tipoProcurado)
     {
         foreach (var mapping in iconesTipos) { if (mapping.tipo == tipoProcurado) return mapping.icone; }
         return null;
     }
 
-    // --- INTERAÇÕES DE MOUSE E CLIQUE ---
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        bool ehMinhaCarta = pertenceAoJogador;
-        bool oponenteRevelado = !pertenceAoJogador && imagemVerso != null && !imagemVerso.gameObject.activeSelf;
-
-        if (ehMinhaCarta || oponenteRevelado)
-        {
-            GameManager.instancia.InspecionarCarta(cardData);
-        }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador)
-        {
-            transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 20f, transform.localPosition.z);
-        }
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador)
-        {
-            transform.localScale = Vector3.one;
-            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 20f, transform.localPosition.z);
-        }
-    }
-
-    // --- SISTEMA DE ARRASTAR E SOLTAR (DRAG & DROP) ---
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
-
-        parentOriginal = transform.parent;
-        indiceOriginal = transform.GetSiblingIndex();
-        posicaoOriginal = transform.localPosition;
-
-        transform.SetParent(transform.root);
-        canvasGroup.blocksRaycasts = false;
-        transform.localScale = new Vector3(0.65f, 0.65f, 0.65f); 
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
-
-        transform.position = eventData.position;
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return;
-
-        canvasGroup.blocksRaycasts = true;
-
-        if (eventData.position.y > Screen.height * 0.4f)
-        {
-            transform.position = new Vector3((Screen.width / 2) - 250, Screen.height / 2, 0);
-            transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
-            
-            GameManager.instancia.ReceberCartaNaArena(this);
-        }
-        else
-        {
-            transform.SetParent(parentOriginal);
-            transform.SetSiblingIndex(indiceOriginal);
-            transform.localPosition = posicaoOriginal;
-            transform.localScale = Vector3.one; 
-        }
-    }
+    // --- INTERAÇÕES DE MOUSE E CLIQUE (MANTIDAS IGUAIS) ---
+    public void OnPointerDown(PointerEventData eventData) { /* ... código original ... */ if (pertenceAoJogador || (!pertenceAoJogador && imagemVerso != null && !imagemVerso.gameObject.activeSelf)) GameManager.instancia.InspecionarCarta(cardData); }
+    public void OnPointerEnter(PointerEventData eventData) { /* ... código original ... */ if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador) { transform.localScale = new Vector3(1.15f, 1.15f, 1.15f); transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 20f, transform.localPosition.z); } }
+    public void OnPointerExit(PointerEventData eventData) { /* ... código original ... */ if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador) { transform.localScale = Vector3.one; transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 20f, transform.localPosition.z); } }
+    public void OnBeginDrag(PointerEventData eventData) { /* ... código original ... */ if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return; parentOriginal = transform.parent; indiceOriginal = transform.GetSiblingIndex(); posicaoOriginal = transform.localPosition; transform.SetParent(transform.root); canvasGroup.blocksRaycasts = false; transform.localScale = new Vector3(0.65f, 0.65f, 0.65f); }
+    public void OnDrag(PointerEventData eventData) { /* ... código original ... */ if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return; transform.position = eventData.position; }
+    public void OnEndDrag(PointerEventData eventData) { /* ... código original ... */ if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return; canvasGroup.blocksRaycasts = true; if (eventData.position.y > Screen.height * 0.4f) { transform.position = new Vector3((Screen.width / 2) - 250, Screen.height / 2, 0); transform.localScale = new Vector3(0.65f, 0.65f, 0.65f); GameManager.instancia.ReceberCartaNaArena(this); } else { transform.SetParent(parentOriginal); transform.SetSiblingIndex(indiceOriginal); transform.localPosition = posicaoOriginal; transform.localScale = Vector3.one; } }
 }

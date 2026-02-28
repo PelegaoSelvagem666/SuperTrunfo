@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0826797fee2f4f2b4b1b53f99dce71e4, type: 3}
+  m_Name: Gosma_Fervente
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  nomeCarta: Gosma Fervente
+  arteCarta: {fileID: 21300000, guid: f40b08801cb9b55ecb776fc49125b522, type: 3}
+  classe: 3
+  tipo: 1
+  moral: 1
+  tituloHabilidade: "Absor\xE7\xE3o T\xE9rmica"
+  descricaoHabilidade: "Ganha for\xE7a ao ser atacado por fogo."
+  forca: 400
+  magia: 700
+  agilidade: 100
+  inteligencia: 500

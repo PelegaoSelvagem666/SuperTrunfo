@@ -19,7 +19,7 @@ public enum CardMoral
 {
     Bom,
     Neutro,
-    Mal
+    Mau
 }
 
 public enum CardType
