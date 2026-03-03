@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0826797fee2f4f2b4b1b53f99dce71e4, type: 3}
+  m_Name: Super Animal
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  nomeCarta: Super Animal
+  arteCarta: {fileID: 21300000, guid: a4877087e795cfc6daec495b52bd4dfe, type: 3}
+  classe: 0
+  tipo1: 0
+  tipo2: 0
+  moral: 0
+  tituloHabilidade: 
+  descricaoHabilidade: "Mais 50 de for\xE7a a cada rodada que sobreviver"
+  forca: 980
+  magia: 910
+  agilidade: 870
+  inteligencia: 890

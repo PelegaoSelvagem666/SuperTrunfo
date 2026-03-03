@@ -1,0 +1,23 @@
+Querubim Ilusionista;Celestial;Mau;Miragem Sagrada;Cria cópias falsas para confundir o atacante.;200;700;600;600;QuerubimIlusionista
+
+Leão Alado;Celestial;Neutro;Rugido dos Céus;Reduz a inteligência e a coragem do adversário.;800;200;700;300;LeaoAlado
+
+Espírito da Aurora;Celestial;Bom;Brilho Matinal;Dissipa qualquer neblina ou magia de escuridão no campo.;100;800;500;400;EspiritoDaAurora
+
+Vigilante do Zênite;Celestial;Mau;Olhar Julgador;Paralisa inimigos com agilidade menor que a dele.;700;500;400;600;VigilanteDoZenite
+
+Pena Mágica;Celestial;Neutro;Vento Cortante;Ataque leve que pode causar sangramento.;50;400;600;100;PenaMagica
+
+Pombinha da Paz;Celestial;Bom;Bandeira Branca;Impede que o inimigo ataque no primeiro turno.;10;300;800;200;PombinhaDaPaz
+
+Nuvenzinha Chuvosa;Celestial;Neutro;Garoa Curativa;Recupera um pouco de magia por turno.;100;500;200;300;NuvenzinhaChuvosa
+
+Aprendiz de Anjo;Celestial;Bom;Auréola Torta;Tenta um milagre aleatório que quase nunca dá certo.;200;400;300;300;AprendizDeAnjo
+
+Cálice Sagrado Falso;Celestial;Mau;Veneno Dourado;Destrói Cartas S se lutar usando apenas Inteligência.;0;900;0;100;CaliceSagradoFalso
+
+Poeira Estelar;Celestial;Neutro;Cegueira Brilhante;Diminui a precisão do próximo ataque inimigo.;50;500;500;50;PoeiraEstelar
+
+Harpa Desafinada;Celestial;Mau;Acorde Irritante;Quebra a concentração, zerando a magia do alvo temporariamente.;100;300;100;600;HarpaDesafinada
+
+Gota de Orvalho;Celestial;Bom;Refresco Rápido;Pequena cura rápida antes de ser destruída.;0;200;100;200;GotaDeOrvalho

@@ -4,7 +4,7 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     [Header("Identidade")]
-    public string nomeCarta;
+    public string nomeCarta; // Mantenha este nome. Vamos ajustar o Absorver para usar ele.
     public Sprite arteCarta;
 
     [Header("Classificação (Calculada Automaticamente)")]
@@ -12,10 +12,15 @@ public class CardData : ScriptableObject
     public CardType tipo;    
     public CardMoral moral;
 
-    [Header("Habilidade")]
+    [Header("Texto da Habilidade (Apenas Visual)")]
     public string tituloHabilidade; 
     [TextArea(3, 5)] 
     public string descricaoHabilidade; 
+
+    // --- NOVA LINHA OBRIGATÓRIA PARA AS SKILLS FUNCIONAREM ---
+    [Header("Lógica da Habilidade (Arraste o Script Aqui)")]
+    public HabilidadeBase habilidadeEspecial; 
+    // ---------------------------------------------------------
 
     [Header("Atributos (0 - 1000)")]
     [Range(0, 1000)] public int forca;
@@ -33,13 +38,9 @@ public class CardData : ScriptableObject
         else if (somaAtributos >= 1600) classe = CardClass.B;
         else classe = CardClass.C;
     }
-
-    // O Unity continua calculando sozinho se você alterar manualmente
+    
     private void OnValidate()
     {
         CalcularClasse();
     }
 }
-
-// (Assumo que os enums CardClass, CardType e CardMoral já estejam declarados 
-// no final deste arquivo ou em um arquivo de script separado)

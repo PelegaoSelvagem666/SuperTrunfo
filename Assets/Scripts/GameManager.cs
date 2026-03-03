@@ -1,14 +1,18 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instancia;
 
     [Header("Configurações do Baralho")]
-    public List<CardData> baralhoCompleto;
+    public BotProfile oponenteAtual; 
+    public List<CardData> baralhoJogador = new List<CardData>(); 
+    public List<CardData> baralhoOponente = new List<CardData>(); 
     public GameObject cartaPrefab;
     private int indiceCompra = 0;
 
@@ -36,8 +40,10 @@ public class GameManager : MonoBehaviour
     public Image imgEmpateJogo;   
     
     [Header("Placares Visuais")]
-    public TextMeshProUGUI placarPontos;   
-    public TextMeshProUGUI placarVitorias; 
+    public TextMeshProUGUI txtPontosJogador;  
+    public TextMeshProUGUI txtPontosOponente; 
+    public TextMeshProUGUI txtVitoriasJogador;
+    public TextMeshProUGUI txtVitoriasOponente;
     
     [Header("Estado do Jogo")]
     public bool turnoDoJogador = true; 
@@ -76,9 +82,44 @@ public class GameManager : MonoBehaviour
         indiceCompra = 0;
         AtualizarPlacares();
 
-        EmbaralharBaralho();
+        CarregarDeckSalvoDoJogador();
+
+        if (oponenteAtual != null)
+        {
+            baralhoOponente = new List<CardData>(oponenteAtual.deckPreDefinido);
+        }
+        else
+        {
+            Debug.LogError("BotProfile não atribuído no Inspector!");
+        }
+
+        EmbaralharDeck(baralhoJogador);
+        EmbaralharDeck(baralhoOponente);
         StartCoroutine(DistribuirCartasAnimado());
-    }     
+    } 
+
+    private void CarregarDeckSalvoDoJogador()
+    {
+        baralhoJogador.Clear();
+        CardData[] todasAsCartas = Resources.LoadAll<CardData>("Cartas");
+        List<CardData> acervoCompleto = new List<CardData>(todasAsCartas);
+
+        if (PlayerPrefs.HasKey("MeuDeckSalvo"))
+        {
+            string deckTexto = PlayerPrefs.GetString("MeuDeckSalvo");
+            if (!string.IsNullOrEmpty(deckTexto))
+            {
+                string[] nomes = deckTexto.Split(',');
+                foreach (string nomeArquivo in nomes)
+                {
+                    CardData cartaEncontrada = acervoCompleto.Find(c => c.name == nomeArquivo);
+                    if (cartaEncontrada != null) baralhoJogador.Add(cartaEncontrada);
+                }
+            }
+        }
+        
+        if(baralhoJogador.Count == 0) Debug.LogError("Deck do jogador não encontrado ou vazio.");
+    }
 
     private void DesativarImagensDeResultado()
     {
@@ -91,79 +132,67 @@ public class GameManager : MonoBehaviour
         if (textoResultado != null) textoResultado.gameObject.SetActive(false);
     }
 
-    public void EmbaralharBaralho()
+    public void EmbaralharDeck(List<CardData> deck)
     {
-        for (int i = 0; i < baralhoCompleto.Count; i++)
+        for (int i = 0; i < deck.Count; i++)
         {
-            CardData temp = baralhoCompleto[i];
-            int randomIndex = Random.Range(i, baralhoCompleto.Count);
-            baralhoCompleto[i] = baralhoCompleto[randomIndex];
-            baralhoCompleto[randomIndex] = temp;
+            CardData temp = deck[i];
+            int randomIndex = Random.Range(i, deck.Count);
+            deck[i] = deck[randomIndex];
+            deck[randomIndex] = temp;
         }
     }
 
-    private System.Collections.IEnumerator DistribuirCartasAnimado()
+    private IEnumerator DistribuirCartasAnimado()
     {
         for (int i = 0; i < 5; i++)
         {
-            if (indiceCompra >= baralhoCompleto.Count) break;
+            if (indiceCompra < baralhoJogador.Count)
+            {
+                GameObject novaCartaJogador = Instantiate(cartaPrefab, maoJogador);
+                CardDisplay displayJogador = novaCartaJogador.GetComponent<CardDisplay>();
+                displayJogador.cardData = baralhoJogador[indiceCompra];
+                displayJogador.pertenceAoJogador = true;
+                displayJogador.AtualizarCarta();
+            }
 
-            GameObject novaCartaJogador = Instantiate(cartaPrefab, maoJogador);
-            CardDisplay displayJogador = novaCartaJogador.GetComponent<CardDisplay>();
-            displayJogador.cardData = baralhoCompleto[indiceCompra];
-            displayJogador.pertenceAoJogador = true;
-            displayJogador.AtualizarCarta();
+            if (indiceCompra < baralhoOponente.Count)
+            {
+                GameObject novaCartaAdversario = Instantiate(cartaPrefab, maoAdversario);
+                CardDisplay displayAdversario = novaCartaAdversario.GetComponent<CardDisplay>();
+                displayAdversario.cardData = baralhoOponente[indiceCompra]; 
+                displayAdversario.pertenceAoJogador = false;
+                displayAdversario.AtualizarCarta();
+            }
+
             indiceCompra++; 
-
-            if (indiceCompra >= baralhoCompleto.Count) break;
-
-            GameObject novaCartaAdversario = Instantiate(cartaPrefab, maoAdversario);
-            CardDisplay displayAdversario = novaCartaAdversario.GetComponent<CardDisplay>();
-            displayAdversario.cardData = baralhoCompleto[indiceCompra]; 
-            displayAdversario.pertenceAoJogador = false;
-            displayAdversario.AtualizarCarta();
-            indiceCompra++; 
-
             yield return new WaitForSeconds(0.25f);
         }
 
         jogoPausado = false;
 
-        if (!turnoDoJogador) 
-        {
-            TurnoDaIA();
-        }
-        else
-        {
-            Debug.Log("🎮 A RODADA COMEÇOU! É o seu turno de atacar.");
-        }
+        if (!turnoDoJogador) TurnoDaIA();
+        else Debug.Log("Rodada iniciada. Turno do jogador.");
     }
 
-    private void AtualizarPlacares()
+   private void AtualizarPlacares()
     {
-        if (placarPontos != null) placarPontos.text = $"PONTOS (Rodada)\nVocê {pontosJogador} x {pontosOponente} IA";
-        if (placarVitorias != null) placarVitorias.text = $"RODADAS VENCIDAS\nVocê {vitoriasJogador} x {vitoriasOponente} IA";
+        if (txtPontosJogador != null) txtPontosJogador.text = pontosJogador.ToString();
+        if (txtPontosOponente != null) txtPontosOponente.text = pontosOponente.ToString();
+        
+        if (txtVitoriasJogador != null) txtVitoriasJogador.text = vitoriasJogador.ToString();
+        if (txtVitoriasOponente != null) txtVitoriasOponente.text = vitoriasOponente.ToString();
     }
 
     public void InspecionarCarta(CardData dados)
     {
         if (painelCartaDetalhe == null) return;
-
-        if (fundoInspecao != null) 
-        {
-            fundoInspecao.SetActive(true);
-            fundoInspecao.transform.SetAsLastSibling(); 
-        }
-
+        if (fundoInspecao != null) { fundoInspecao.SetActive(true); fundoInspecao.transform.SetAsLastSibling(); }
         if (maoJogador != null) maoJogador.SetAsLastSibling();
-
         if (cartaDoJogadorNaArena != null) cartaDoJogadorNaArena.transform.SetAsLastSibling();
         if (cartaAtacanteIA != null) cartaAtacanteIA.transform.SetAsLastSibling();
 
-        if (painelVisualizadorCemiterio != null && painelVisualizadorCemiterio.activeSelf)
-        {
-            painelVisualizadorCemiterio.transform.SetAsLastSibling();
-        }
+        if (painelVisualizadorCemiterio != null && painelVisualizadorCemiterio.activeSelf) painelVisualizadorCemiterio.transform.SetAsLastSibling();
         else
         {
             if (cemiterioJogador != null) cemiterioJogador.SetAsLastSibling(); 
@@ -175,6 +204,7 @@ public class GameManager : MonoBehaviour
         painelCartaDetalhe.cardData = dados;
         painelCartaDetalhe.AtualizarCarta();
     }
+
     public void ReceberCartaNaArena(CardDisplay cartaDoJogador) 
     {
         if (jogoPausado) return;
@@ -194,31 +224,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- BOTÕES DO PAINEL DE ATRIBUTOS ---
     public void EscolherForca() { IniciarBatalha("Força"); }
     public void EscolherMagia() { IniciarBatalha("Magia"); }
     public void EscolherAgilidade() { IniciarBatalha("Agilidade"); }
     public void EscolherInteligencia() { IniciarBatalha("Inteligência"); }
 
-    // === NOVA FUNÇÃO: CANCELAR JOGADA ===
     public void CancelarJogada()
     {
-        Debug.Log("Jogada cancelada. A carta voltou para a mão.");
-
-        // Se existe uma carta na arena, devolve ela pra mão
         if (cartaDoJogadorNaArena != null)
         {
             cartaDoJogadorNaArena.transform.SetParent(maoJogador, false);
-            cartaDoJogadorNaArena = null; // Limpa a referência da arena
+            cartaDoJogadorNaArena = null; 
         }
-
-        // Esconde o painel de atributos
-        if (painelEscolhaAtributo != null)
-        {
-            painelEscolhaAtributo.SetActive(false);
-        }
+        if (painelEscolhaAtributo != null) painelEscolhaAtributo.SetActive(false);
     }
-    // =====================================
 
     private void IniciarBatalha(string atributoEscolhido)
     {
@@ -320,29 +339,68 @@ public class GameManager : MonoBehaviour
 
     private void ResolverDuelo(CardDisplay cartaJogador, CardDisplay cartaOponente, string atributo)
     {
-        int valorJogador = PegarValorAtributo(cartaJogador.cardData, atributo);
-        int valorOponente = PegarValorAtributo(cartaOponente.cardData, atributo);
-        
+        cartaJogador.ResetarBonus();
+        cartaOponente.ResetarBonus();
+
+        if (cartaJogador.cardData.habilidadeEspecial != null)
+        {
+            cartaJogador.cardData.habilidadeEspecial.AtivarHabilidade(cartaJogador, cartaOponente);
+        }
+
+        if (cartaOponente.cardData.habilidadeEspecial != null)
+        {
+            cartaOponente.cardData.habilidadeEspecial.AtivarHabilidade(cartaOponente, cartaJogador);
+        }
+
+        int valorBaseJogador = PegarValorAtributo(cartaJogador.cardData, atributo);
+        int valorBaseOponente = PegarValorAtributo(cartaOponente.cardData, atributo);
+
+        int valorFinalJogador = valorBaseJogador + cartaJogador.valorTemporarioBonus;
+        int valorFinalOponente = valorBaseOponente + cartaOponente.valorTemporarioBonus;
+
+        if(cartaJogador.valorTemporarioBonus != 0 || cartaOponente.valorTemporarioBonus != 0)
+        {
+            Debug.Log($"Habilidades aplicadas! Jogador: {valorBaseJogador}->{valorFinalJogador} | IA: {valorBaseOponente}->{valorFinalOponente}");
+        }
+
         if (efeitoChoque != null) efeitoChoque.Explodir();
         if (textoAvisoIA != null) textoAvisoIA.gameObject.SetActive(false);
         
         string mensagemDeCombate = "";
 
-        if (valorJogador > valorOponente)
+        if (valorFinalJogador > valorFinalOponente)
         {
             pontosJogador++;
             turnoDoJogador = true; 
-            mensagemDeCombate = $"VITÓRIA!\n<size=50>{valorJogador} x {valorOponente}</size>";
+            mensagemDeCombate = $"VITÓRIA!\n<size=50>{valorFinalJogador} x {valorFinalOponente}</size>";
         }
-        else if (valorOponente > valorJogador)
+        else if (valorFinalOponente > valorFinalJogador)
         {
             pontosOponente++;
             turnoDoJogador = false; 
-            mensagemDeCombate = $"DERROTA!\n<size=50>{valorJogador} x {valorOponente}</size>";
+            mensagemDeCombate = $"DERROTA!\n<size=50>{valorFinalJogador} x {valorFinalOponente}</size>";
         }
-        else
+        else 
         {
-            mensagemDeCombate = $"EMPATE!\n<size=50>Ambos com {valorJogador}</size>";
+            int somaJogador = cartaJogador.cardData.forca + cartaJogador.cardData.magia + cartaJogador.cardData.agilidade + cartaJogador.cardData.inteligencia;
+            int somaOponente = cartaOponente.cardData.forca + cartaOponente.cardData.magia + cartaOponente.cardData.agilidade + cartaOponente.cardData.inteligencia;
+
+            if (somaJogador > somaOponente)
+            {
+                pontosJogador++;
+                turnoDoJogador = true; 
+                mensagemDeCombate = $"DESEMPATE (Soma Total)\nVITÓRIA!\n<size=40>{somaJogador} x {somaOponente}</size>";
+            }
+            else if (somaOponente > somaJogador)
+            {
+                pontosOponente++;
+                turnoDoJogador = false; 
+                mensagemDeCombate = $"DESEMPATE (Soma Total)\nDERROTA!\n<size=40>{somaJogador} x {somaOponente}</size>";
+            }
+            else 
+            {
+                mensagemDeCombate = $"EMPATE ABSOLUTO!\n<size=40>Até na soma ({somaJogador})</size>";
+            }
         }
 
         AtualizarPlacares();
@@ -351,7 +409,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(RotinaFimDeTurno(cartaJogador, cartaOponente, mensagemDeCombate));
     }
 
-    private System.Collections.IEnumerator RotinaFimDeTurno(CardDisplay cartaJogador, CardDisplay cartaOponente, string mensagem)
+    private IEnumerator RotinaFimDeTurno(CardDisplay cartaJogador, CardDisplay cartaOponente, string mensagem)
     {
         if (textoResultado != null)
         {
@@ -381,48 +439,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-private System.Collections.IEnumerator EncerrarRodada()
+    private IEnumerator EncerrarRodada()
     {
         jogoPausado = true;
         DesativarImagensDeResultado(); 
         
-        // 1. Atualiza as vitórias 
         if (pontosJogador > pontosOponente) { vitoriasJogador++; turnoDoJogador = true; }
         else if (pontosOponente > pontosJogador) { vitoriasOponente++; turnoDoJogador = false; }
         
         AtualizarPlacares();
 
-        // 2. Se alguém chegou a 3 vitórias, acaba o jogo e NÃO mostra imagem de rodada
-        if (vitoriasJogador >= 3 || vitoriasOponente >= 3 || indiceCompra >= baralhoCompleto.Count)
+        if (vitoriasJogador >= 3 || vitoriasOponente >= 3 || indiceCompra >= baralhoJogador.Count || indiceCompra >= baralhoOponente.Count)
         {
             FinalizarJogo();
             yield break; 
         }
 
-        // 3. MOSTRAMOS A IMAGEM DA RODADA USANDO A FUNÇÃO MÁGICA
-        if (pontosJogador > pontosOponente) 
-        { 
-            AtivarImagem(imgVitoriaRodada);
-        }
-        else if (pontosOponente > pontosJogador) 
-        { 
-            AtivarImagem(imgDerrotaRodada);
-        }
+        if (pontosJogador > pontosOponente) AtivarImagem(imgVitoriaRodada);
+        else if (pontosOponente > pontosJogador) AtivarImagem(imgDerrotaRodada);
         else 
         { 
-            if (imgEmpateRodada != null) 
-            {
-                AtivarImagem(imgEmpateRodada);
-            }
-            else if (textoResultado != null) 
-            { 
-                textoResultado.text = "RODADA EMPATADA!"; 
-                textoResultado.gameObject.SetActive(true); 
-                textoResultado.transform.SetAsLastSibling();
-            }
+            if (imgEmpateRodada != null) AtivarImagem(imgEmpateRodada);
+            else if (textoResultado != null) { textoResultado.text = "RODADA EMPATADA!"; textoResultado.gameObject.SetActive(true); textoResultado.transform.SetAsLastSibling(); }
         }
         
-        // Espera 3 segundos com a imagem na tela
         yield return new WaitForSeconds(3f);
         
         DesativarImagensDeResultado(); 
@@ -430,26 +470,20 @@ private System.Collections.IEnumerator EncerrarRodada()
         LimparMaos();
         yield return new WaitForSeconds(1f); 
 
-        // Reseta os pontos para a próxima rodada
         pontosJogador = 0;
         pontosOponente = 0;
         AtualizarPlacares();
+        
         StartCoroutine(DistribuirCartasAnimado());
     }
 
     private void LimparMaos()
     {
         CardDisplay[] cartasJogador = maoJogador.GetComponentsInChildren<CardDisplay>();
-        foreach (CardDisplay carta in cartasJogador)
-        {
-            EnviarParaCemiterio(carta, cemiterioJogador);
-        }
+        foreach (CardDisplay carta in cartasJogador) EnviarParaCemiterio(carta, cemiterioJogador);
 
         CardDisplay[] cartasOponente = maoAdversario.GetComponentsInChildren<CardDisplay>();
-        foreach (CardDisplay carta in cartasOponente)
-        {
-            EnviarParaCemiterio(carta, cemiterioOponente);
-        }
+        foreach (CardDisplay carta in cartasOponente) EnviarParaCemiterio(carta, cemiterioOponente);
     }
 
     private void FinalizarJogo()
@@ -457,24 +491,23 @@ private System.Collections.IEnumerator EncerrarRodada()
         jogoPausado = true; 
         DesativarImagensDeResultado();
         
-        Debug.Log($"🚨 FIM DE JOGO ACIONADO! Placar Final -> Você: {vitoriasJogador} x {vitoriasOponente} IA");
+        Debug.Log($"Fim de Jogo. Placar: {vitoriasJogador} x {vitoriasOponente}");
 
-        if (vitoriasJogador > vitoriasOponente)
-        {
-            Debug.Log("🏆 O código decidiu que VOCÊ VENCEU. Tentando ligar a imagem de Vitória...");
-            AtivarImagem(imgVitoriaJogo);
-        }
-        else if (vitoriasOponente > vitoriasJogador)
-        {
-            Debug.Log("💀 O código decidiu que a IA VENCEU. Tentando ligar a imagem de Derrota...");
-            AtivarImagem(imgDerrotaJogo);
-        }
+        if (vitoriasJogador > vitoriasOponente) AtivarImagem(imgVitoriaJogo);
+        else if (vitoriasOponente > vitoriasJogador) AtivarImagem(imgDerrotaJogo);
         else
         {
-            Debug.Log("⚖️ O código decidiu que foi EMPATE.");
             if (imgEmpateJogo != null) AtivarImagem(imgEmpateJogo);
             else if (textoResultado != null) { textoResultado.text = "EMPATE TÉCNICO!"; textoResultado.gameObject.SetActive(true); textoResultado.transform.SetAsLastSibling(); }
         }
+
+        StartCoroutine(RetornarAoMenuAposFim());
+    }
+
+    private IEnumerator RetornarAoMenuAposFim()
+    {
+        yield return new WaitForSeconds(4f); 
+        SceneManager.LoadScene("MenuPrincipal"); 
     }
 
     private void AtivarImagem(Image img)
@@ -486,7 +519,6 @@ private System.Collections.IEnumerator EncerrarRodada()
                 img.transform.parent.gameObject.SetActive(true);
                 img.transform.parent.SetAsLastSibling();
             }
-            
             img.gameObject.SetActive(true);
             img.transform.SetAsLastSibling();
         }
@@ -496,11 +528,7 @@ private System.Collections.IEnumerator EncerrarRodada()
     {
         if (carta == null || cemiterio == null) return;
         
-        if (carta.imagemVerso != null) 
-        {
-            carta.imagemVerso.gameObject.SetActive(false);
-            carta.AtualizarCarta();
-        }
+        if (carta.imagemVerso != null) { carta.imagemVerso.gameObject.SetActive(false); carta.AtualizarCarta(); }
         
         carta.transform.SetParent(cemiterio);
         carta.transform.localPosition = Vector3.zero; 
@@ -518,32 +546,18 @@ private System.Collections.IEnumerator EncerrarRodada()
         if (painelVisualizadorCemiterio != null && painelVisualizadorCemiterio.activeSelf) return;
 
         FecharInspecao(); 
-
         jogoPausado = true;
 
-        if (fundoInspecao != null) 
-        {
-            fundoInspecao.SetActive(true);
-            fundoInspecao.transform.SetAsLastSibling(); 
-        }
+        if (fundoInspecao != null) { fundoInspecao.SetActive(true); fundoInspecao.transform.SetAsLastSibling(); }
+        if (painelVisualizadorCemiterio != null) { painelVisualizadorCemiterio.SetActive(true); painelVisualizadorCemiterio.transform.SetAsLastSibling(); }
 
-        if (painelVisualizadorCemiterio != null)
-        {
-            painelVisualizadorCemiterio.SetActive(true);
-            painelVisualizadorCemiterio.transform.SetAsLastSibling(); 
-        }
-
-        foreach (Transform filho in conteudoGradeCemiterio)
-        {
-            Destroy(filho.gameObject);
-        }
+        foreach (Transform filho in conteudoGradeCemiterio) Destroy(filho.gameObject);
 
         Transform cemiterioAlvo = ehCemiterioJogador ? cemiterioJogador : cemiterioOponente;
 
         foreach (Transform filho in cemiterioAlvo)
         {
             CardDisplay cartaNoCemiterio = filho.GetComponent<CardDisplay>();
-            
             if (cartaNoCemiterio != null && cartaNoCemiterio.cardData != null)
             {
                 GameObject novaCarta = Instantiate(prefabIconeCemiterio, conteudoGradeCemiterio);
@@ -563,15 +577,11 @@ private System.Collections.IEnumerator EncerrarRodada()
         if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
         if (painelVisualizadorCemiterio != null) painelVisualizadorCemiterio.SetActive(false); 
         if (fundoInspecao != null) fundoInspecao.SetActive(false);
-        
         jogoPausado = false; 
     }
 
-    public void FecharCemiterio()
-    {
-        FecharInspecao();
-    }
-
+    public void FecharCemiterio() { FecharInspecao(); }
     public void ClicarCemiterioJogador() { AbrirCemiterio(true); }
     public void ClicarCemiterioOponente() { AbrirCemiterio(false); }
+    public void BotaoRenderSe() { SceneManager.LoadScene("MenuPrincipal"); }
 }

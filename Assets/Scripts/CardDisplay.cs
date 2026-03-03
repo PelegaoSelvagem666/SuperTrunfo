@@ -6,6 +6,14 @@ using UnityEngine.EventSystems;
 
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    [Header("Batalha")]
+    public int valorTemporarioBonus = 0; // O número que acumula os buffs/debuffs
+
+    public void ResetarBonus()
+    {
+        valorTemporarioBonus = 0;
+    }
+    
     [Header("Dados")]
     public CardData cardData;
     public bool pertenceAoJogador = false;
