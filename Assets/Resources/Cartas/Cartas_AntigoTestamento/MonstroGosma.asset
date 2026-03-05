@@ -17,8 +17,10 @@ MonoBehaviour:
   classe: 4
   tipo: 0
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "Transmuta\xE7\xE3o Necrom\xF3rfica"
+  descricaoHabilidade: "Ao entrar na campo, escolhe uma carta em qualquer cemit\xE9rio
+    para copiar seus atributos."
+  habilidadeEspecial: {fileID: 11400000, guid: 3e25b8fd2472407f9aebf19270890b57, type: 2}
   forca: 159
   magia: 205
   agilidade: 206

@@ -41,6 +41,12 @@ public class GameManager : MonoBehaviour
     [Header("Controle de Habilidades")]
     public bool interrupcaoDeHabilidade = false; 
     private bool habilidadeJaUsada = false;
+    [Header("Seleção Manual de Habilidade")]
+    public bool aguardandoSelecaoCemiterio = false;
+    public CardDisplay cartaSelecionadaPeloEfeito = null;
+    [Header("UI de Habilidades")]
+    public GameObject botaoConfirmarSelecao; 
+    private CardDisplay cartaSendoInspecionada; // Memória para saber qual carta está no painel
     [Header("Buffs para o Próximo Duelo")]
     public int promessaBuffVitoriaJogador = 0;   // Fica guardado aguardando o resultado
     public int promessaBuffVitoriaOponente = 0; 
@@ -113,8 +119,29 @@ public class GameManager : MonoBehaviour
 
         EmbaralharDeck(baralhoJogador);
         EmbaralharDeck(baralhoOponente);
+        if (oponenteAtual != null)
+        {
+            Debug.Log($"⚔️ BATALHA INICIADA! Jogador ({baralhoJogador.Count} cartas) VS {oponenteAtual.nomeDoBot} ({baralhoOponente.Count} cartas)");
+        }
         StartCoroutine(DistribuirCartasAnimado());
     } 
+    void Update()
+    {
+        // Se apertar a tecla ESC (Escape)
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Tenta fechar as Configurações primeiro
+            if (painelConfiguracoes != null && painelConfiguracoes.activeSelf)
+            {
+                FecharConfiguracoes();
+            }
+            // Se as configurações não estiverem abertas, tenta fechar a tela de Inspeção/Cemitério
+            else if (fundoInspecao != null && fundoInspecao.activeSelf)
+            {
+                FecharInspecao();
+            }
+        }
+    }
 
     private void CarregarDeckSalvoDoJogador()
     {
@@ -223,30 +250,58 @@ public class GameManager : MonoBehaviour
         // --- A MÁGICA ACONTECE AQUI ---
         painelCartaDetalhe.cardData = cartaClicada.cardData;                     // Copia a arte e atributos originais
         painelCartaDetalhe.valorTemporarioBonus = cartaClicada.valorTemporarioBonus; // Copia os buffs/nerfs atuais!
-        painelCartaDetalhe.AtualizarCarta();                                     // Repinta os textos com as cores certas
+        painelCartaDetalhe.AtualizarCarta();      
+        cartaSendoInspecionada = cartaClicada; // Salva a referência real da carta
+
+        // Se o jogo está pausado pedindo uma carta, E a carta clicada for de algum cemitério:
+        if (aguardandoSelecaoCemiterio && (cartaClicada.transform.parent == cemiterioJogador || cartaClicada.transform.parent == cemiterioOponente || cartaClicada.transform.parent == conteudoGradeCemiterio))
+        {
+            if (botaoConfirmarSelecao != null) botaoConfirmarSelecao.SetActive(true);
+        }
+        else // Inspeção normal, esconde o botão
+        {
+            if (botaoConfirmarSelecao != null) botaoConfirmarSelecao.SetActive(false);
+        }                               // Repinta os textos com as cores certas
     }
 
     public void ReceberCartaNaArena(CardDisplay cartaDoJogador) 
     {
         if (jogoPausado) return;
         cartaDoJogadorNaArena = cartaDoJogador; 
+
         cartaDoJogadorNaArena.valorTemporarioBonus = modificadorGlobalJogador + buffProximaCartaJogador;
-        cartaDoJogadorNaArena.AtualizarCarta();
+        cartaDoJogadorNaArena.AtualizarCarta(); 
 
         if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
-        if (fundoInspecao != null) fundoInspecao.SetActive(false);
 
+        // A MÁGICA ACONTECE AQUI: Inicia uma rotina em vez de abrir o painel direto
+        StartCoroutine(RotinaEntradaNaArena(cartaDoJogadorNaArena));
+    }
+
+    // --- NOVA ROTINA DE ENTRADA ---
+    private IEnumerator RotinaEntradaNaArena(CardDisplay carta)
+    {
+        // 1. O jogo pausa aqui e resolve a habilidade no cemitério primeiro!
+        if (carta.cardData.habilidadeEspecial != null)
+        {
+            yield return StartCoroutine(carta.cardData.habilidadeEspecial.AoEntrarEmCampoCoroutine(carta));
+        }
+
+        // 2. Depois que a habilidade acabou (você clicou no Confirmar), o jogo continua!
         if (turnoDoJogador)
         {
-            painelEscolhaAtributo.transform.SetAsLastSibling(); 
-            painelEscolhaAtributo.SetActive(true);
+           if (painelEscolhaAtributo != null) 
+            {
+                painelEscolhaAtributo.SetActive(true);
+                painelEscolhaAtributo.transform.SetAsLastSibling();
+            }
         }
         else
         {
-            ResolverDuelo(cartaDoJogadorNaArena, cartaAtacanteIA, atributoAtaqueIA);
+            // Se você estava defendendo, a IA já escolheu o atributo, então vai direto pra luta
+          StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaAtacanteIA, atributoEmDisputa));
         }
     }
-
     public void EscolherForca() { IniciarBatalha("Força"); }
     public void EscolherMagia() { IniciarBatalha("Magia"); }
     public void EscolherAgilidade() { IniciarBatalha("Agilidade"); }
@@ -267,7 +322,7 @@ public class GameManager : MonoBehaviour
     private void IniciarBatalha(string atributoEscolhido)
     {
         painelEscolhaAtributo.SetActive(false);
-        
+        Debug.Log($"👤 TURNO DO JOGADOR: Você escolheu disputar {atributoEscolhido.ToUpper()}!");
         CardDisplay cartaOponente = null;
 
         // CASO SERJÃO: Se a IA já tinha atacado, a carta dela já está guardada aqui.
@@ -299,7 +354,7 @@ public class GameManager : MonoBehaviour
 
         if (cartaOponente != null)
         {
-            ResolverDuelo(cartaDoJogadorNaArena, cartaOponente, atributoEscolhido);
+           StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaOponente, atributoEscolhido));
         }
     }
 
@@ -365,7 +420,9 @@ public class GameManager : MonoBehaviour
             {
                 textoAvisoIA.text = $"O Oponente atacou com: {melhorAtributo.ToUpper()}!";
                 textoAvisoIA.gameObject.SetActive(true);
+                
             }
+            Debug.Log($"🤖 TURNO DA IA: O Oponente jogou '{cartaEscolhida.cardData.nomeCarta}' e disputará {melhorAtributo.ToUpper()}!");
         }
     }
 
@@ -381,7 +438,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  private void ResolverDuelo(CardDisplay cartaJogador, CardDisplay cartaOponente, string atributo)
+  private IEnumerator ResolverDuelo(CardDisplay cartaJogador, CardDisplay cartaOponente, string atributo)
     {
         atributoEmDisputa = atributo;
         
@@ -395,23 +452,21 @@ public class GameManager : MonoBehaviour
         // Zera o buff da "próxima carta" para ele não durar para sempre
         buffProximaCartaJogador = 0;
         buffProximaCartaOponente = 0;
+        Debug.Log($"⚔️ EMBATE: {cartaJogador.cardData.nomeCarta} VS {cartaOponente.cardData.nomeCarta} (Atributo: {atributo.ToUpper()})");
 
         CardDisplay primeiroAAtivar = turnoDoJogador ? cartaJogador : cartaOponente; // Atacante
         CardDisplay segundoAAtivar = turnoDoJogador ? cartaOponente : cartaJogador; // Defensor
-
-        // 1. Habilidade do Atacante dispara primeiro
         if (primeiroAAtivar.cardData.habilidadeEspecial != null)
-            primeiroAAtivar.cardData.habilidadeEspecial.AtivarHabilidade(primeiroAAtivar, segundoAAtivar);
+            yield return StartCoroutine(primeiroAAtivar.cardData.habilidadeEspecial.AtivarHabilidadeCoroutine(primeiroAAtivar, segundoAAtivar));
 
-        // 2. Habilidade do Defensor dispara depois (e pode anular ou alterar a anterior)
         if (segundoAAtivar.cardData.habilidadeEspecial != null)
-            segundoAAtivar.cardData.habilidadeEspecial.AtivarHabilidade(segundoAAtivar, primeiroAAtivar);
+            yield return StartCoroutine(segundoAAtivar.cardData.habilidadeEspecial.AtivarHabilidadeCoroutine(segundoAAtivar, primeiroAAtivar));
 
         // Freio do Serjão Berranteiro
         if (interrupcaoDeHabilidade)
         {
             interrupcaoDeHabilidade = false;
-            return; 
+            yield break; 
         }
         cartaJogador.AtualizarCarta();
         cartaOponente.AtualizarCarta();
@@ -438,6 +493,7 @@ public class GameManager : MonoBehaviour
             pontosJogador++;
             turnoDoJogador = true; 
             mensagemDeCombate = $"VITÓRIA!\n<size=50>{valorFinalJogador} x {valorFinalOponente}</size>";
+            Debug.Log($"🏆 RESULTADO: O Jogador amassou! ({valorFinalJogador} x {valorFinalOponente})");
             
             // ✅ SE O JOGADOR VENCEU, CUMPRE A PROMESSA DE BUFF:
             if (promessaBuffVitoriaJogador > 0) buffProximaCartaJogador = promessaBuffVitoriaJogador;
@@ -447,6 +503,7 @@ public class GameManager : MonoBehaviour
             pontosOponente++;
             turnoDoJogador = false; 
             mensagemDeCombate = $"DERROTA!\n<size=50>{valorFinalJogador} x {valorFinalOponente}</size>";
+            Debug.Log($"💀 RESULTADO: A IA levou a melhor... ({valorFinalOponente} x {valorFinalJogador})");
 
             // ✅ SE O OPONENTE VENCEU, CUMPRE A PROMESSA DE BUFF:
             if (promessaBuffVitoriaOponente > 0) buffProximaCartaOponente = promessaBuffVitoriaOponente;
@@ -462,6 +519,7 @@ public class GameManager : MonoBehaviour
                 pontosJogador++;
                 turnoDoJogador = true; 
                 mensagemDeCombate = $"DESEMPATE (Soma Total)\nVITÓRIA!\n<size=40>{somaJogador} x {somaOponente}</size>";
+                Debug.Log($"⚖️ RESULTADO: Empate no atributo principal!");
             }
             else if (somaOponente > somaJogador)
             {
@@ -605,22 +663,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-   private void EnviarParaCemiterio(CardDisplay carta, Transform cemiterio)
+ private void EnviarParaCemiterio(CardDisplay carta, Transform cemiterio)
     {
         if (carta == null || cemiterio == null) return;
         
-        // ========================================================
-        // CORREÇÃO: Limpa os bônus e repinta a carta para a cor original
         carta.ResetarBonus();
-        carta.AtualizarCarta();
-        // ========================================================
 
+        // 1º PASSO: Tira a capa roxa PRIMEIRO
         if (carta.imagemVerso != null) 
         { 
             carta.imagemVerso.gameObject.SetActive(false); 
-            // Já atualizamos a carta ali em cima, então não precisa de outro AtualizarCarta() aqui
         }
         
+        // 2º PASSO: Agora sim manda atualizar (como ela não tem capa, vai desenhar a arte)
+        carta.AtualizarCarta();
+
         carta.transform.SetParent(cemiterio);
         carta.transform.localPosition = Vector3.zero; 
         carta.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f); 
@@ -673,6 +730,19 @@ public class GameManager : MonoBehaviour
         if (painelVisualizadorCemiterio != null) painelVisualizadorCemiterio.SetActive(false); 
         if (fundoInspecao != null) fundoInspecao.SetActive(false);
         jogoPausado = false; 
+        if (botaoConfirmarSelecao != null) botaoConfirmarSelecao.SetActive(false);
+        cartaSendoInspecionada = null;
+    }
+    // Esta é a função que o botão "CONFIRMAR ESCOLHA" vai chamar ao ser clicado!
+    public void ConfirmarSelecaoCemiterio()
+    {
+        if (aguardandoSelecaoCemiterio && cartaSendoInspecionada != null)
+        {
+            cartaSelecionadaPeloEfeito = cartaSendoInspecionada; // Envia a carta para a Habilidade
+            aguardandoSelecaoCemiterio = false;                  // Destrava a batalha!
+            
+            FecharInspecao(); // Esconde a tela de detalhes e o botão automaticamente
+        }
     }
     public void ForcarVezDeEscolha(bool ehVezDoPlayer)
     {
@@ -701,5 +771,21 @@ public class GameManager : MonoBehaviour
     public void FecharCemiterio() { FecharInspecao(); }
     public void ClicarCemiterioJogador() { AbrirCemiterio(true); }
     public void ClicarCemiterioOponente() { AbrirCemiterio(false); }
+    [Header("Configurações")]
+    public GameObject painelConfiguracoes;
+
+    public void AbrirConfiguracoes() 
+    { 
+        if (painelConfiguracoes != null) 
+        {
+            painelConfiguracoes.SetActive(true);
+            painelConfiguracoes.transform.SetAsLastSibling(); // Joga pra frente de tudo
+        }
+    }
+    
+    public void FecharConfiguracoes() 
+    { 
+        if (painelConfiguracoes != null) painelConfiguracoes.SetActive(false); 
+    }
     public void BotaoRenderSe() { SceneManager.LoadScene("MenuPrincipal"); }
 }

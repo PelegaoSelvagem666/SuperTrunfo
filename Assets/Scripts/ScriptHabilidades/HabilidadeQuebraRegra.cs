@@ -19,7 +19,7 @@ public class HabilidadeQuebraRegra : HabilidadeBase
             // 2. Se o Serjão é seu, e a IA TINHA ATACADO (turnoDoJogador é false), ROUBA A VEZ!
             if (usuario.pertenceAoJogador && !gm.turnoDoJogador)
             {
-                Debug.Log($"Ativando habilidade: {nomeHabilidade} - AQUI TEM CORAGEM!");
+                Debug.Log($"Ativando habilidade: {usuario.cardData.tituloHabilidade} - AQUI TEM CORAGEM!");
                 gm.ForcarVezDeEscolha(true); 
             }
         }

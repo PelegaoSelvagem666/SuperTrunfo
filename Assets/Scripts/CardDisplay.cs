@@ -7,12 +7,11 @@ using UnityEngine.EventSystems;
 public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [Header("Batalha")]
-    public int valorTemporarioBonus = 0; // O número que acumula os buffs/debuffs
+    public int valorTemporarioBonus = 0; 
 
     public void ResetarBonus()
     {
         valorTemporarioBonus = 0;
-        AtualizarCarta(); // Garante que a carta volte à cor normal quando resetar
     }
     
     [Header("Dados")]
@@ -26,7 +25,6 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Image iconeClasseLetra;
 
     [Header("Textos e Ícones")]
-    public Color corTextoPadrao = Color.white; // <-- NOVA VARIÁVEL: Cor original do seu texto
     public TextMeshProUGUI textoNome;
     public Image imagemTipo1;
     public Image imagemTipo2; 
@@ -72,9 +70,10 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void AtualizarCarta()
     {
         if (cardData == null) return;
-       if (imagemVerso != null && imagemVerso.gameObject.activeSelf) 
+        
+        // CORREÇÃO 1: Apaga os textos fantasmas quando a carta do oponente está virada!
+        if (imagemVerso != null && imagemVerso.gameObject.activeSelf) 
         {
-            // Apaga os textos para não vazarem por cima da capa!
             if (textoHabTitulo != null) textoHabTitulo.text = "";
             if (textoHabDesc != null) textoHabDesc.text = "";
             return; 
@@ -85,7 +84,7 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (camadaMoldura != null) camadaMoldura.sprite = GetMolduraPorClasse(cardData.classe);
         if (iconeClasseLetra != null) iconeClasseLetra.sprite = GetLetraPorClasse(cardData.classe);
 
-        // <-- AQUI ESTÁ A MÁGICA DAS CORES -->
+        // O sistema de cores que criamos juntos
         AtualizarTextoAtributo(textoForca, cardData.forca);
         AtualizarTextoAtributo(textoMagia, cardData.magia);
         AtualizarTextoAtributo(textoAgilidade, cardData.agilidade);
@@ -107,28 +106,15 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (imagemTipo1 != null) imagemTipo1.sprite = GetIconeTipo(cardData.tipo); 
     }
 
-    // --- NOVA FUNÇÃO DE CORES E VALORES ---
     private void AtualizarTextoAtributo(TextMeshProUGUI textoUI, int valorBase)
     {
         if (textoUI == null) return;
-
-        // Calcula o valor final com a trava do GameManager (0 a 1000)
         int valorFinal = Mathf.Clamp(valorBase + valorTemporarioBonus, 0, 1000);
         textoUI.text = valorFinal.ToString();
 
-        // Muda a cor baseada no resultado
-        if (valorFinal > valorBase)
-        {
-            textoUI.color = Color.green; // BUFF
-        }
-        else if (valorFinal < valorBase)
-        {
-            textoUI.color = Color.red; // DEBUFF
-        }
-        else
-        {
-            textoUI.color = corTextoPadrao; // NORMAL
-        }
+        if (valorFinal > valorBase) textoUI.color = Color.green;
+        else if (valorFinal < valorBase) textoUI.color = Color.red;
+        else textoUI.color = Color.white;
     }
 
     private Sprite GetMolduraPorClasse(CardClass classeProcurada)
@@ -149,15 +135,15 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         return null;
     }
 
-    // --- INTERAÇÕES DE MOUSE E CLIQUE ---
+    // CORREÇÃO 2: Agora enviamos "this" (a carta inteira) no clique!
     public void OnPointerDown(PointerEventData eventData) 
     { 
         if (pertenceAoJogador || (!pertenceAoJogador && imagemVerso != null && !imagemVerso.gameObject.activeSelf)) 
         {
-            // O segredo está aqui: enviamos "this" (esta carta inteira) em vez de só o "cardData"
             GameManager.instancia.InspecionarCarta(this); 
         }
     }
+    
     public void OnPointerEnter(PointerEventData eventData) { if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador) { transform.localScale = new Vector3(1.15f, 1.15f, 1.15f); transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + 20f, transform.localPosition.z); } }
     public void OnPointerExit(PointerEventData eventData) { if (pertenceAoJogador && !GameManager.instancia.jogoPausado && transform.parent == GameManager.instancia.maoJogador) { transform.localScale = Vector3.one; transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - 20f, transform.localPosition.z); } }
     public void OnBeginDrag(PointerEventData eventData) { if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado) return; parentOriginal = transform.parent; indiceOriginal = transform.GetSiblingIndex(); posicaoOriginal = transform.localPosition; transform.SetParent(transform.root); canvasGroup.blocksRaycasts = false; transform.localScale = new Vector3(0.65f, 0.65f, 0.65f); }
