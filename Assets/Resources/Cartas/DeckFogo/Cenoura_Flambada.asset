@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: "Ra\xEDzes Quentes"
-  descricaoHabilidade: "Aumenta a intelig\xEAncia temporariamente."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 50
   magia: 100
   agilidade: 100

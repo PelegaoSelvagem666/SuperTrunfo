@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: Corpo Derretido
-  descricaoHabilidade: "Reflete parte do dano f\xEDsico recebido."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 950
   magia: 800
   agilidade: 100

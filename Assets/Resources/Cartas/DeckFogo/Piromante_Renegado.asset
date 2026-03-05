@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: "Chama Ca\xF3tica"
-  descricaoHabilidade: "Lan\xE7a fogo sem se importar com os danos colaterais."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 400
   magia: 900
   agilidade: 700

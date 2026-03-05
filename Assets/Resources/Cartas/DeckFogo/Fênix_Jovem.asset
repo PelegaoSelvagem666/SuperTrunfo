@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: Renascimento
-  descricaoHabilidade: Retorna das cinzas uma vez por combate.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 500
   magia: 850
   agilidade: 850

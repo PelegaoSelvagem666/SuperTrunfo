@@ -17,8 +17,10 @@ MonoBehaviour:
   classe: 3
   tipo: 1
   moral: 2
-  tituloHabilidade: "Fogo F\xE1tuo"
-  descricaoHabilidade: "Confunde o inimigo antes de queim\xE1-lo."
+  tituloHabilidade: "Maldi\xE7\xE3o Constante"
+  descricaoHabilidade: "Na rodada que estiver no cemit\xE9rio, enfraquece os atributos
+    do advers\xE1rio em 50 pontos."
+  habilidadeEspecial: {fileID: 11400000, guid: cc5d29b09d3965363b8e7142b9414ade, type: 2}
   forca: 300
   magia: 600
   agilidade: 850

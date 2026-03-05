@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: "Fuga R\xE1pida"
-  descricaoHabilidade: "Garante alta taxa de evas\xE3o."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 200
   magia: 50
   agilidade: 700

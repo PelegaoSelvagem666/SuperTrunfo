@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: "Absor\xE7\xE3o T\xE9rmica"
-  descricaoHabilidade: "Ganha for\xE7a ao ser atacado por fogo."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 400
   magia: 700
   agilidade: 100

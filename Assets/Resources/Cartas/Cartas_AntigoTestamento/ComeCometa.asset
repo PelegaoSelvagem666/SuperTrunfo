@@ -15,11 +15,11 @@ MonoBehaviour:
   nomeCarta: Come Cometa
   arteCarta: {fileID: 21300000, guid: e053b8c28e7a81415b1590ad0c43dcdd, type: 3}
   classe: 3
-  tipo1: 0
-  tipo2: 0
+  tipo: 0
   moral: 0
   tituloHabilidade: 
   descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 715
   magia: 544
   agilidade: 610

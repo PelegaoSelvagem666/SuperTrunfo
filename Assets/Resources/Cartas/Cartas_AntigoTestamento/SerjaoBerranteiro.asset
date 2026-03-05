@@ -17,8 +17,10 @@ MonoBehaviour:
   classe: 0
   tipo: 0
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: Aqui tem coragem
+  descricaoHabilidade: "Essa carta faz a decis\xE3o de atributo sempre, independente
+    de quem seja o turno."
+  habilidadeEspecial: {fileID: 11400000, guid: e36d95481f41c810cb4ef4fc88ee4203, type: 2}
   forca: 897
   magia: 929
   agilidade: 929

@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: Trilha Escaldante
-  descricaoHabilidade: Deixa um rastro de fogo por onde passa.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 600
   magia: 500
   agilidade: 500

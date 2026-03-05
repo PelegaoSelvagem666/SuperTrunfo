@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: Arremesso de Brasa
-  descricaoHabilidade: "Ataca a dist\xE2ncia e foge rapidamente."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 300
   magia: 100
   agilidade: 500

@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: "Erup\xE7\xE3o Iminente"
-  descricaoHabilidade: "Desperta a f\xFAria da terra em forma de lava."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 900
   magia: 850
   agilidade: 400

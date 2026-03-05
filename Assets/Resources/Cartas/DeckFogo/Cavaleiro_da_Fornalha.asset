@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: "Marreta Magm\xE1tica"
-  descricaoHabilidade: "Destr\xF3i a armadura do oponente com o calor."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 850
   magia: 400
   agilidade: 600

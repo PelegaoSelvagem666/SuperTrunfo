@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: Iluminar o Caminho
-  descricaoHabilidade: "Revela habilidades ocultas do advers\xE1rio."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 700
   magia: 200
   agilidade: 500

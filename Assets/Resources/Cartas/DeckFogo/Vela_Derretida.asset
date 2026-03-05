@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: Cera Escaldante
-  descricaoHabilidade: Prende o inimigo e o queima aos poucos.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 0
   magia: 600
   agilidade: 0

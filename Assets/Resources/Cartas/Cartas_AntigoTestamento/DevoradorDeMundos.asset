@@ -15,11 +15,12 @@ MonoBehaviour:
   nomeCarta: Devorrador de Mundos
   arteCarta: {fileID: 21300000, guid: 1d4026e6578567aa39f21d422163a849, type: 3}
   classe: 2
-  tipo1: 0
-  tipo2: 0
+  tipo: 0
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "Destruidor Imbat\xEDvel"
+  descricaoHabilidade: "Essa carta \xE9 INVENC\xCDVEL contra inimigos do tipo Terra
+    e Natureza."
+  habilidadeEspecial: {fileID: 11400000, guid: 2fe9e5c3d509a717ab61e5e58613fec8, type: 2}
   forca: 823
   magia: 841
   agilidade: 317

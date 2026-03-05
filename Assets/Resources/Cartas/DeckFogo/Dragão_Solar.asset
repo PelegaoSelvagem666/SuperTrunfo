@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: Sopro do Astro Rei
-  descricaoHabilidade: "Incinera inimigos com a f\xFAria de uma estrela."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 1000
   magia: 900
   agilidade: 950

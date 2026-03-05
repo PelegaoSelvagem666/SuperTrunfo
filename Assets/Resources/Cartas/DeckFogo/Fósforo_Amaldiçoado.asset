@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: "Canh\xE3o de Vidro"
-  descricaoHabilidade: "Destr\xF3i Cartas S se lutar com Magia."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 10
   magia: 900
   agilidade: 10

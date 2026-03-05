@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Absorvel
   arteCarta: {fileID: 21300000, guid: b848b819b80bf872f8a7590d3ca44302, type: 3}
-  classe: 2
-  tipo1: 0
-  tipo2: 0
+  classe: 1
+  tipo: 0
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: Absorver
+  descricaoHabilidade: Antes de iniciar a batalha, Absorvel suga 100 pontos do atributo
+    a ser batalhado para fortalecer a si mesmo.
+  habilidadeEspecial: {fileID: 11400000, guid: a0eb6d38048b36cf09d6389da13b593a, type: 2}
   forca: 780
-  magia: 920
+  magia: 820
   agilidade: 740
   inteligencia: 860

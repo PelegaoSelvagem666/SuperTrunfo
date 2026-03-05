@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: Machadada Brutal
-  descricaoHabilidade: Um golpe pesado e cheio de raiva.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 600
   magia: 50
   agilidade: 200

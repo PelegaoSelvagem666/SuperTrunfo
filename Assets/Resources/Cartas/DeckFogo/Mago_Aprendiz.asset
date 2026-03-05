@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: "Fa\xEDsca M\xE1gica"
-  descricaoHabilidade: "Magia inst\xE1vel com resultados imprevis\xEDveis."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 100
   magia: 800
   agilidade: 400

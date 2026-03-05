@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: "Soberania \xCDgnea"
-  descricaoHabilidade: Controla o campo de batalha com poder absoluto das chamas.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 950
   magia: 1000
   agilidade: 750

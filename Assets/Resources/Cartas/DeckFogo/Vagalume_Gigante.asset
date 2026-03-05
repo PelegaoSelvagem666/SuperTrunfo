@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: Brilho Ofuscante
-  descricaoHabilidade: Cega o inimigo e garante esquiva.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 100
   magia: 300
   agilidade: 800

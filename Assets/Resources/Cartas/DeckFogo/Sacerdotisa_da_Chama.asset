@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: "B\xEAn\xE7\xE3o do Fogo"
-  descricaoHabilidade: "Purifica aliados e queima advers\xE1rios."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 300
   magia: 1000
   agilidade: 900

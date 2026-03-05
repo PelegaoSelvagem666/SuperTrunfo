@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: Mordida de Enxofre
-  descricaoHabilidade: Causa queimaduras severas a cada ataque.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 880
   magia: 700
   agilidade: 900

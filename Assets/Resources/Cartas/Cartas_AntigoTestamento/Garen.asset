@@ -15,11 +15,13 @@ MonoBehaviour:
   nomeCarta: Garen
   arteCarta: {fileID: 21300000, guid: ae5a6874e8db769e9819b6db4fa41d3f, type: 3}
   classe: 1
-  tipo1: 0
-  tipo2: 0
+  tipo: 0
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "Ajuda ao pr\xF3ximo"
+  descricaoHabilidade: "Se vencer um duelo, a pr\xF3xima carta a batalhar receber\xE1
+    um buff de 100 pontos no atributo a ser batalhado. Este efeito n\xE3o passa de
+    uma rodada para outra."
+  habilidadeEspecial: {fileID: 11400000, guid: 5de99bca1cd02af938f94e588ed9bf80, type: 2}
   forca: 859
   magia: 523
   agilidade: 886

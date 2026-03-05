@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: Cegueira de Fuligem
-  descricaoHabilidade: Diminui a agilidade do inimigo temporariamente.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 200
   magia: 400
   agilidade: 900

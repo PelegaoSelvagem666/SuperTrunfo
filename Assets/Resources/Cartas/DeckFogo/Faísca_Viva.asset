@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: "Choque Est\xE1tico"
-  descricaoHabilidade: "Ataque r\xE1pido que ignora pequenas armaduras."
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 50
   magia: 400
   agilidade: 600

@@ -18,7 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: Esmagamento Quente
-  descricaoHabilidade: Um ataque lento mas devastador.
+  descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 800
   magia: 500
   agilidade: 50
