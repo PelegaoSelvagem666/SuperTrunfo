@@ -15,11 +15,12 @@ MonoBehaviour:
   nomeCarta: Iceden
   arteCarta: {fileID: 21300000, guid: 285f559236fb0cf05b4b59cdd94e22da, type: 3}
   classe: 2
-  tipo1: 0
-  tipo2: 0
+  tipo: 10
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "Limpeza G\xE9lida"
+  descricaoHabilidade: Ao entrar em campo, remove todos os buffs do oponente durante
+    o duelo.
+  habilidadeEspecial: {fileID: 11400000, guid: c5b163610821dfaf0a316d4988a59a66, type: 2}
   forca: 698
   magia: 728
   agilidade: 545

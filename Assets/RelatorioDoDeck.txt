@@ -1,0 +1,602 @@
+=== RELATÓRIO DO JOGO: CARTAS E HABILIDADES ===
+
+CARTA: Absorvel
+  - Classificação: Classe S | Tipo: Natureza | Moral: Neutro
+  - Atributos: F:780 | M:820 | A:740 | I:860
+  - Habilidade Equipada: Hab_Absorver
+--------------------------------------------------
+CARTA: Almondega Voadora
+  - Classificação: Classe A | Tipo: Trevas | Moral: Mau
+  - Atributos: F:920 | M:300 | A:780 | I:420
+  - Habilidade Equipada: Hab_gen_AlmondegaVoadora
+--------------------------------------------------
+CARTA: Ameba
+  - Classificação: Classe B | Tipo: Agua | Moral: Mau
+  - Atributos: F:420 | M:690 | A:480 | I:650
+  - Habilidade Equipada: Hab_gen_Ameba
+--------------------------------------------------
+CARTA: Aquanóide
+  - Classificação: Classe B | Tipo: Agua | Moral: Mau
+  - Atributos: F:580 | M:520 | A:650 | I:470
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Bocão
+  - Classificação: Classe B | Tipo: Natureza | Moral: Bom
+  - Atributos: F:830 | M:320 | A:540 | I:410
+  - Habilidade Equipada: Hab_gen_Bocao
+--------------------------------------------------
+CARTA: Butterfairy
+  - Classificação: Classe S | Tipo: Natureza | Moral: Bom
+  - Atributos: F:720 | M:880 | A:910 | I:840
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cabeça de Abóbora
+  - Classificação: Classe A | Tipo: Espirito | Moral: Mau
+  - Atributos: F:540 | M:820 | A:730 | I:690
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Calafrio
+  - Classificação: Classe A | Tipo: Trevas | Moral: Bom
+  - Atributos: F:560 | M:830 | A:640 | I:780
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Camarão Com Pão
+  - Classificação: Classe B | Tipo: Agua | Moral: Neutro
+  - Atributos: F:458 | M:760 | A:457 | I:584
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Canibal
+  - Classificação: Classe B | Tipo: Humano | Moral: Mau
+  - Atributos: F:368 | M:654 | A:768 | I:326
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Caracol
+  - Classificação: Classe C | Tipo: Bestial | Moral: Mau
+  - Atributos: F:281 | M:293 | A:57 | I:587
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cavaleiro
+  - Classificação: Classe A | Tipo: Humano | Moral: Bom
+  - Atributos: F:936 | M:683 | A:406 | I:594
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cerébro
+  - Classificação: Classe B | Tipo: Terra | Moral: Bom
+  - Atributos: F:169 | M:613 | A:439 | I:959
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Come Cometa
+  - Classificação: Classe B | Tipo: Cosmico | Moral: Mau
+  - Atributos: F:715 | M:544 | A:610 | I:404
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cometa
+  - Classificação: Classe A | Tipo: Cosmico | Moral: Mau
+  - Atributos: F:936 | M:542 | A:783 | I:229
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cristal Polar
+  - Classificação: Classe B | Tipo: Agua | Moral: Bom
+  - Atributos: F:622 | M:712 | A:336 | I:315
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Demônio Boxeador
+  - Classificação: Classe B | Tipo: Fogo | Moral: Mau
+  - Atributos: F:763 | M:313 | A:747 | I:157
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Devorrador de Mundos
+  - Classificação: Classe A | Tipo: Cosmico | Moral: Mau
+  - Atributos: F:964 | M:807 | A:317 | I:695
+  - Habilidade Equipada: Imune a Tipo Natureza e Terra
+--------------------------------------------------
+CARTA: Dracula
+  - Classificação: Classe A | Tipo: Trevas | Moral: Mau
+  - Atributos: F:418 | M:800 | A:802 | I:644
+  - Habilidade Equipada: Hab_gen_Dracula
+--------------------------------------------------
+CARTA: DragonMan
+  - Classificação: Classe C | Tipo: Bestial | Moral: Neutro
+  - Atributos: F:605 | M:225 | A:469 | I:200
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Dragão Alado
+  - Classificação: Classe S | Tipo: Ar | Moral: Neutro
+  - Atributos: F:940 | M:880 | A:760 | I:720
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Dagão Giratório
+  - Classificação: Classe A | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:760 | M:720 | A:810 | I:640
+  - Habilidade Equipada: NovaApostaMortal
+--------------------------------------------------
+CARTA: Dragão de Fogo
+  - Classificação: Classe SS | Tipo: Fogo | Moral: Mau
+  - Atributos: F:950 | M:902 | A:919 | I:936
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Elástico
+  - Classificação: Classe C | Tipo: Humano | Moral: Neutro
+  - Atributos: F:236 | M:267 | A:771 | I:262
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Escuridão
+  - Classificação: Classe B | Tipo: Trevas | Moral: Mau
+  - Atributos: F:308 | M:598 | A:543 | I:466
+  - Habilidade Equipada: NovoForcarEmpate
+--------------------------------------------------
+CARTA: Espinhoso
+  - Classificação: Classe C | Tipo: Terra | Moral: Neutro
+  - Atributos: F:533 | M:333 | A:400 | I:293
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: E. T
+  - Classificação: Classe C | Tipo: Cosmico | Moral: Neutro
+  - Atributos: F:397 | M:262 | A:356 | I:554
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Explosão
+  - Classificação: Classe C | Tipo: Espirito | Moral: Mau
+  - Atributos: F:870 | M:111 | A:121 | I:100
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Fantasma
+  - Classificação: Classe C | Tipo: Terra | Moral: Bom
+  - Atributos: F:152 | M:401 | A:795 | I:206
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Fênix
+  - Classificação: Classe SS | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:925 | M:952 | A:840 | I:926
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Frankstein
+  - Classificação: Classe B | Tipo: Trevas | Moral: Mau
+  - Atributos: F:813 | M:275 | A:467 | I:46
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Fumaça
+  - Classificação: Classe B | Tipo: Ar | Moral: Mau
+  - Atributos: F:913 | M:735 | A:257 | I:136
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Furacão
+  - Classificação: Classe A | Tipo: Natureza | Moral: Mau
+  - Atributos: F:948 | M:542 | A:843 | I:136
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Galo de Kalsa
+  - Classificação: Classe SS | Tipo: Bestial | Moral: Neutro
+  - Atributos: F:905 | M:929 | A:900 | I:916
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Garen
+  - Classificação: Classe S | Tipo: Bestial | Moral: Bom
+  - Atributos: F:859 | M:523 | A:886 | I:734
+  - Habilidade Equipada: Habilidade Buff Vitoria
+--------------------------------------------------
+CARTA: Grugou
+  - Classificação: Classe C | Tipo: Natureza | Moral: Neutro
+  - Atributos: F:1 | M:1 | A:1 | I:1
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Guardião do Pântano
+  - Classificação: Classe S | Tipo: Natureza | Moral: Neutro
+  - Atributos: F:856 | M:743 | A:660 | I:818
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Guerreiro Sapo
+  - Classificação: Classe B | Tipo: Bestial | Moral: Bom
+  - Atributos: F:750 | M:432 | A:409 | I:523
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Guerreiro Doce
+  - Classificação: Classe A | Tipo: Humano | Moral: Bom
+  - Atributos: F:790 | M:705 | A:619 | I:682
+  - Habilidade Equipada: Hab_Repelir
+--------------------------------------------------
+CARTA: Homem Peixe
+  - Classificação: Classe C | Tipo: Agua | Moral: Bom
+  - Atributos: F:167 | M:161 | A:402 | I:606
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Homem Fogo
+  - Classificação: Classe A | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:273 | M:945 | A:591 | I:675
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Homem Gavião
+  - Classificação: Classe A | Tipo: Bestial | Moral: Bom
+  - Atributos: F:638 | M:636 | A:929 | I:545
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Homem Nuvem
+  - Classificação: Classe C | Tipo: Ar | Moral: Bom
+  - Atributos: F:341 | M:394 | A:371 | I:341
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Iceden
+  - Classificação: Classe A | Tipo: Bestial | Moral: Bom
+  - Atributos: F:698 | M:728 | A:545 | I:818
+  - Habilidade Equipada: Hab_AnularBuffs
+--------------------------------------------------
+CARTA: Jumenta Voadora
+  - Classificação: Classe SS | Tipo: Celestial | Moral: Bom
+  - Atributos: F:977 | M:977 | A:977 | I:977
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Kid Tatu Bola
+  - Classificação: Classe C | Tipo: Terra | Moral: Bom
+  - Atributos: F:614 | M:365 | A:393 | I:182
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Machadão
+  - Classificação: Classe B | Tipo: Trevas | Moral: Mau
+  - Atributos: F:727 | M:329 | A:818 | I:62
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Mago
+  - Classificação: Classe S | Tipo: Humano | Moral: Bom
+  - Atributos: F:712 | M:950 | A:419 | I:940
+  - Habilidade Equipada: Hab_Multipla_Mago
+--------------------------------------------------
+CARTA: Mega Carrapato
+  - Classificação: Classe B | Tipo: Bestial | Moral: Mau
+  - Atributos: F:511 | M:289 | A:841 | I:300
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Mestre Tatu
+  - Classificação: Classe A | Tipo: Terra | Moral: Bom
+  - Atributos: F:644 | M:626 | A:622 | I:767
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Milo
+  - Classificação: Classe B | Tipo: Bestial | Moral: Bom
+  - Atributos: F:631 | M:333 | A:659 | I:519
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Minhoquinha Kamikaze
+  - Classificação: Classe B | Tipo: Bestial | Moral: Neutro
+  - Atributos: F:767 | M:400 | A:789 | I:189
+  - Habilidade Equipada: Hab-gen_Minhoquinha
+--------------------------------------------------
+CARTA: Monstro de Lava
+  - Classificação: Classe C | Tipo: Fogo | Moral: Mau
+  - Atributos: F:602 | M:564 | A:143 | I:170
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Monstro de Terra
+  - Classificação: Classe C | Tipo: Terra | Moral: Neutro
+  - Atributos: F:878 | M:256 | A:111 | I:156
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Monstro Gosma
+  - Classificação: Classe C | Tipo: Natureza | Moral: Neutro
+  - Atributos: F:159 | M:205 | A:206 | I:182
+  - Habilidade Equipada: Possessão Manual
+--------------------------------------------------
+CARTA: Múmia
+  - Classificação: Classe A | Tipo: Trevas | Moral: Mau
+  - Atributos: F:693 | M:739 | A:614 | I:830
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Netuno
+  - Classificação: Classe S | Tipo: Agua | Moral: Bom
+  - Atributos: F:875 | M:886 | A:842 | I:951
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Ninja
+  - Classificação: Classe S | Tipo: Humano | Moral: Neutro
+  - Atributos: F:773 | M:434 | A:990 | I:950
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: O Cabeça
+  - Classificação: Classe A | Tipo: Trevas | Moral: Mau
+  - Atributos: F:620 | M:780 | A:640 | I:720
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Olhudo
+  - Classificação: Classe C | Tipo: Trevas | Moral: Mau
+  - Atributos: F:190 | M:226 | A:762 | I:202
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Pântano Vivo
+  - Classificação: Classe B | Tipo: Natureza | Moral: Mau
+  - Atributos: F:833 | M:536 | A:155 | I:429
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Poderoso
+  - Classificação: Classe SS | Tipo: Cosmico | Moral: Neutro
+  - Atributos: F:999 | M:999 | A:999 | I:999
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Quebra Tudo
+  - Classificação: Classe B | Tipo: Terra | Moral: Bom
+  - Atributos: F:880 | M:99 | A:762 | I:161
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Quimera
+  - Classificação: Classe B | Tipo: Terra | Moral: Bom
+  - Atributos: F:724 | M:324 | A:771 | I:248
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Raio
+  - Classificação: Classe A | Tipo: Eletricidade | Moral: Mau
+  - Atributos: F:661 | M:750 | A:969 | I:232
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Risk
+  - Classificação: Classe A | Tipo: Cosmico | Moral: Neutro
+  - Atributos: F:661 | M:750 | A:969 | I:232
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Senhor do Abismo
+  - Classificação: Classe B | Tipo: Terra | Moral: Bom
+  - Atributos: F:518 | M:464 | A:518 | I:464
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Serjão Berranteiro
+  - Classificação: Classe SS | Tipo: Humano | Moral: Bom
+  - Atributos: F:897 | M:929 | A:929 | I:893
+  - Habilidade Equipada: Habi_Serjao
+--------------------------------------------------
+CARTA: Sugordô
+  - Classificação: Classe C | Tipo: Celestial | Moral: Neutro
+  - Atributos: F:571 | M:143 | A:18 | I:643
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Super Animal
+  - Classificação: Classe SS | Tipo: Celestial | Moral: Bom
+  - Atributos: F:980 | M:910 | A:870 | I:890
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Super Tatu Bola
+  - Classificação: Classe A | Tipo: Terra | Moral: Bom
+  - Atributos: F:820 | M:127 | A:804 | I:821
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Três Cabeças
+  - Classificação: Classe A | Tipo: Bestial | Moral: Mau
+  - Atributos: F:804 | M:786 | A:661 | I:696
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Zumbi
+  - Classificação: Classe C | Tipo: Trevas | Moral: Mau
+  - Atributos: F:318 | M:429 | A:393 | I:393
+  - Habilidade Equipada: Hab_Coveiro
+--------------------------------------------------
+CARTA: Árvore Ancestral
+  - Classificação: Classe A | Tipo: Natureza | Moral: Mau
+  - Atributos: F:820 | M:760 | A:420 | I:700
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Almôndega Colossal
+  - Classificação: Classe S | Tipo: Trevas | Moral: Mau
+  - Atributos: F:990 | M:907 | A:729 | I:760
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Belzebu
+  - Classificação: Classe A | Tipo: Trevas | Moral: Mau
+  - Atributos: F:666 | M:666 | A:666 | I:666
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Bugai
+  - Classificação: Classe B | Tipo: Humano | Moral: Bom
+  - Atributos: F:325 | M:578 | A:364 | I:842
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cristal Corrompido
+  - Classificação: Classe B | Tipo: Agua | Moral: Mau
+  - Atributos: F:357 | M:439 | A:711 | I:313
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Elfo Celeste
+  - Classificação: Classe B | Tipo: Celestial | Moral: Bom
+  - Atributos: F:361 | M:626 | A:311 | I:651
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Elfo Sangrento
+  - Classificação: Classe A | Tipo: Natureza | Moral: Bom
+  - Atributos: F:717 | M:683 | A:778 | I:809
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Elfo Sombrio
+  - Classificação: Classe A | Tipo: Trevas | Moral: Mau
+  - Atributos: F:426 | M:721 | A:764 | I:656
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Espirito De Nevasca
+  - Classificação: Classe B | Tipo: Agua | Moral: Neutro
+  - Atributos: F:311 | M:770 | A:475 | I:311
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Guarda Orc
+  - Classificação: Classe C | Tipo: Bestial | Moral: Mau
+  - Atributos: F:693 | M:164 | A:230 | I:328
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Guerreiro Anão
+  - Classificação: Classe C | Tipo: Terra | Moral: Bom
+  - Atributos: F:639 | M:213 | A:262 | I:475
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Kid Ninja
+  - Classificação: Classe C | Tipo: Humano | Moral: Bom
+  - Atributos: F:410 | M:164 | A:689 | I:311
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Leafar
+  - Classificação: Classe B | Tipo: Humano | Moral: Bom
+  - Atributos: F:721 | M:311 | A:492 | I:705
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Lief
+  - Classificação: Classe B | Tipo: Humano | Moral: Bom
+  - Atributos: F:803 | M:262 | A:311 | I:557
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Milito
+  - Classificação: Classe S | Tipo: Celestial | Moral: Neutro
+  - Atributos: F:885 | M:787 | A:770 | I:803
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Paladino
+  - Classificação: Classe A | Tipo: Humano | Moral: Bom
+  - Atributos: F:820 | M:328 | A:574 | I:754
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Satakku
+  - Classificação: Classe B | Tipo: Trevas | Moral: Mau
+  - Atributos: F:705 | M:459 | A:426 | I:213
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Sensei
+  - Classificação: Classe B | Tipo: Humano | Moral: Bom
+  - Atributos: F:361 | M:591 | A:197 | I:820
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Sentinela de Gelo
+  - Classificação: Classe C | Tipo: Agua | Moral: Neutro
+  - Atributos: F:656 | M:426 | A:180 | I:295
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Shadow Fist
+  - Classificação: Classe C | Tipo: Terra | Moral: Bom
+  - Atributos: F:410 | M:98 | A:525 | I:180
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Succubus
+  - Classificação: Classe C | Tipo: Trevas | Moral: Mau
+  - Atributos: F:262 | M:689 | A:213 | I:426
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Wolfang
+  - Classificação: Classe C | Tipo: Bestial | Moral: Bom
+  - Atributos: F:754 | M:139 | A:344 | I:33
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cavaleiro da Fornalha
+  - Classificação: Classe A | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:850 | M:400 | A:600 | I:650
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cenoura Flambada
+  - Classificação: Classe C | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:50 | M:100 | A:100 | I:800
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Cão Infernal
+  - Classificação: Classe S | Tipo: Fogo | Moral: Mau
+  - Atributos: F:880 | M:700 | A:900 | I:600
+  - Habilidade Equipada: Hab_gen_CaoInfernal
+--------------------------------------------------
+CARTA: Diabrete Incendiário
+  - Classificação: Classe B | Tipo: Fogo | Moral: Mau
+  - Atributos: F:300 | M:600 | A:850 | I:400
+  - Habilidade Equipada: Habi_Maldicao
+--------------------------------------------------
+CARTA: Dragão Solar
+  - Classificação: Classe SS | Tipo: Fogo | Moral: Bom
+  - Atributos: F:1000 | M:900 | A:950 | I:850
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Efígie do Vulcão
+  - Classificação: Classe S | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:900 | M:850 | A:400 | I:850
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Elemental de Lava
+  - Classificação: Classe A | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:950 | M:800 | A:100 | I:600
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Espírito da Lareira
+  - Classificação: Classe A | Tipo: Fogo | Moral: Bom
+  - Atributos: F:200 | M:950 | A:600 | I:850
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Faísca Viva
+  - Classificação: Classe C | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:50 | M:400 | A:600 | I:100
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Fênix Jovem
+  - Classificação: Classe A | Tipo: Fogo | Moral: Bom
+  - Atributos: F:500 | M:850 | A:850 | I:600
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Fósforo Amaldiçoado
+  - Classificação: Classe C | Tipo: Fogo | Moral: Mau
+  - Atributos: F:10 | M:900 | A:10 | I:50
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Goblin Carvoeiro
+  - Classificação: Classe C | Tipo: Fogo | Moral: Mau
+  - Atributos: F:300 | M:100 | A:500 | I:200
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Gosma Fervente
+  - Classificação: Classe B | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:400 | M:700 | A:100 | I:500
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Guarda Tocha
+  - Classificação: Classe B | Tipo: Fogo | Moral: Bom
+  - Atributos: F:700 | M:200 | A:500 | I:400
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Lenhador Queimado
+  - Classificação: Classe C | Tipo: Fogo | Moral: Mau
+  - Atributos: F:600 | M:50 | A:200 | I:100
+  - Habilidade Equipada: Hab_gen_LenhadorQueimado
+--------------------------------------------------
+CARTA: Mago Aprendiz
+  - Classificação: Classe B | Tipo: Fogo | Moral: Bom
+  - Atributos: F:100 | M:800 | A:400 | I:700
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Morcego de Fumaça
+  - Classificação: Classe B | Tipo: Fogo | Moral: Mau
+  - Atributos: F:200 | M:400 | A:900 | I:200
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Piromante Renegado
+  - Classificação: Classe A | Tipo: Fogo | Moral: Mau
+  - Atributos: F:400 | M:900 | A:700 | I:800
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Rato das Cinzas
+  - Classificação: Classe C | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:200 | M:50 | A:700 | I:300
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Rocha Candente
+  - Classificação: Classe B | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:800 | M:500 | A:50 | I:300
+  - Habilidade Equipada: Hab_gen_RochaCandente
+--------------------------------------------------
+CARTA: Sacerdotisa da Chama
+  - Classificação: Classe S | Tipo: Fogo | Moral: Bom
+  - Atributos: F:300 | M:1000 | A:900 | I:950
+  - Habilidade Equipada: Hab_gen_SacerdotisaChama
+--------------------------------------------------
+CARTA: Salamandra de Magma
+  - Classificação: Classe B | Tipo: Fogo | Moral: Neutro
+  - Atributos: F:600 | M:500 | A:500 | I:300
+  - Habilidade Equipada: Hab_gen_SalamandraMaligna
+--------------------------------------------------
+CARTA: Senhor das Cinzas
+  - Classificação: Classe SS | Tipo: Fogo | Moral: Mau
+  - Atributos: F:950 | M:1000 | A:750 | I:900
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Vagalume Gigante
+  - Classificação: Classe C | Tipo: Fogo | Moral: Bom
+  - Atributos: F:100 | M:300 | A:800 | I:100
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------
+CARTA: Vela Derretida
+  - Classificação: Classe C | Tipo: Fogo | Moral: Bom
+  - Atributos: F:0 | M:600 | A:0 | I:500
+  - Habilidade Equipada: NENHUMA HABILIDADE
+--------------------------------------------------

@@ -18,8 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: Trilha Escaldante
-  descricaoHabilidade: 
-  habilidadeEspecial: {fileID: 0}
+  descricaoHabilidade: Enfraquece inimigos do Tipo Natureza em 100 pontos!
+  habilidadeEspecial: {fileID: 11400000, guid: 9c8655d2e0cc7457198163c2d50dd611, type: 2}
   forca: 600
   magia: 500
   agilidade: 500

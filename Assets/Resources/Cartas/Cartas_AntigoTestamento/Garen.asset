@@ -15,7 +15,7 @@ MonoBehaviour:
   nomeCarta: Garen
   arteCarta: {fileID: 21300000, guid: ae5a6874e8db769e9819b6db4fa41d3f, type: 3}
   classe: 1
-  tipo: 0
+  tipo: 10
   moral: 0
   tituloHabilidade: "Ajuda ao pr\xF3ximo"
   descricaoHabilidade: "Se vencer um duelo, a pr\xF3xima carta a batalhar receber\xE1

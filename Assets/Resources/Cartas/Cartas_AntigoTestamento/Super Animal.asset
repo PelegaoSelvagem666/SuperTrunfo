@@ -15,11 +15,11 @@ MonoBehaviour:
   nomeCarta: Super Animal
   arteCarta: {fileID: 21300000, guid: a4877087e795cfc6daec495b52bd4dfe, type: 3}
   classe: 0
-  tipo1: 0
-  tipo2: 0
+  tipo: 4
   moral: 0
   tituloHabilidade: 
   descricaoHabilidade: "Mais 50 de for\xE7a a cada rodada que sobreviver"
+  habilidadeEspecial: {fileID: 0}
   forca: 980
   magia: 910
   agilidade: 870

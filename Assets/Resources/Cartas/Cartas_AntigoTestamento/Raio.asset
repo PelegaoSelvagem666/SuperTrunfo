@@ -15,10 +15,11 @@ MonoBehaviour:
   nomeCarta: Raio
   arteCarta: {fileID: 21300000, guid: d660f72cfab45eb62a58ca556013b020, type: 3}
   classe: 2
-  tipo: 0
-  moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tipo: 7
+  moral: 2
+  tituloHabilidade: "Sinergia El\xE9trica"
+  descricaoHabilidade: "Recebe 1000 pontos se Risk estiver no cemit\xE9rio"
+  habilidadeEspecial: {fileID: 11400000, guid: 4c4e8349b03c640c7aeb29e797ca8e2d, type: 2}
   forca: 661
   magia: 750
   agilidade: 969

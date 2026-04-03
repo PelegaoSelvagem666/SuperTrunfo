@@ -18,8 +18,8 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: Mordida de Enxofre
-  descricaoHabilidade: 
-  habilidadeEspecial: {fileID: 0}
+  descricaoHabilidade: Enfraquece em 50 pontos inimigos de Moral Bom OU Neutro
+  habilidadeEspecial: {fileID: 11400000, guid: 5b67e109d12503f3f8b6fe54070cb9ff, type: 2}
   forca: 880
   magia: 700
   agilidade: 900

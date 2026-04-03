@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Cometa
   arteCarta: {fileID: 21300000, guid: 2394b98ae2c9d697f8ee979e49ca6ad5, type: 3}
-  classe: 3
-  tipo1: 0
-  tipo2: 0
-  moral: 0
+  classe: 2
+  tipo: 11
+  moral: 2
   tituloHabilidade: 
   descricaoHabilidade: 
-  forca: 787
-  magia: 632
-  agilidade: 561
-  inteligencia: 351
+  habilidadeEspecial: {fileID: 0}
+  forca: 936
+  magia: 542
+  agilidade: 783
+  inteligencia: 229

@@ -17,9 +17,10 @@ MonoBehaviour:
   classe: 4
   tipo: 1
   moral: 2
-  tituloHabilidade: "Canh\xE3o de Vidro"
-  descricaoHabilidade: 
-  habilidadeEspecial: {fileID: 0}
+  tituloHabilidade: "Maldi\xE7\xE3o do Cemit\xE9rio"
+  descricaoHabilidade: "Na rodada que estiver no cemit\xE9rio, enfraquece os atributos
+    do advers\xE1rio em 50 pontos."
+  habilidadeEspecial: {fileID: 11400000, guid: cc5d29b09d3965363b8e7142b9414ade, type: 2}
   forca: 10
   magia: 900
   agilidade: 10

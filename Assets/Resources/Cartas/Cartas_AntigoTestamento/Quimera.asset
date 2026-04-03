@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Quimera
   arteCarta: {fileID: 21300000, guid: fddd77e1bee34c8858c95929fd6b6426, type: 3}
-  classe: 4
+  classe: 3
   tipo: 0
   moral: 0
   tituloHabilidade: 
   descricaoHabilidade: 
-  forca: 0
-  magia: 0
-  agilidade: 0
-  inteligencia: 0
+  habilidadeEspecial: {fileID: 0}
+  forca: 724
+  magia: 324
+  agilidade: 771
+  inteligencia: 248

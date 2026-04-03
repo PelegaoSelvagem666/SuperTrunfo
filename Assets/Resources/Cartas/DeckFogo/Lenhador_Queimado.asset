@@ -18,8 +18,9 @@ MonoBehaviour:
   tipo: 1
   moral: 2
   tituloHabilidade: Machadada Brutal
-  descricaoHabilidade: 
-  habilidadeEspecial: {fileID: 0}
+  descricaoHabilidade: Recebe 80 pontos ao enfrentar inimigos do Tipo Natureza OU
+    Bestial
+  habilidadeEspecial: {fileID: 11400000, guid: c34bff1ce65522c2ca73e6c1084f1ea0, type: 2}
   forca: 600
   magia: 50
   agilidade: 200

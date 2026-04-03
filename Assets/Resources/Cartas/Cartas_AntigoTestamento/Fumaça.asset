@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "Fuma\xE7a"
   arteCarta: {fileID: 21300000, guid: 05cca4d8af812e337b308f87ce14ea59, type: 3}
-  classe: 4
-  tipo1: 0
-  tipo2: 0
-  moral: 0
+  classe: 3
+  tipo: 2
+  moral: 2
   tituloHabilidade: 
   descricaoHabilidade: 
-  forca: 253
-  magia: 210
-  agilidade: 680
+  habilidadeEspecial: {fileID: 0}
+  forca: 913
+  magia: 735
+  agilidade: 257
   inteligencia: 136

@@ -18,8 +18,9 @@ MonoBehaviour:
   tipo: 1
   moral: 0
   tituloHabilidade: "B\xEAn\xE7\xE3o do Fogo"
-  descricaoHabilidade: 
-  habilidadeEspecial: {fileID: 0}
+  descricaoHabilidade: Recebe 250 pontos ao enfrentar inimigos do Tipo Trevas E Moral
+    Mau
+  habilidadeEspecial: {fileID: 11400000, guid: 81f898ce11d93ffe0959d7683576f616, type: 2}
   forca: 300
   magia: 1000
   agilidade: 900

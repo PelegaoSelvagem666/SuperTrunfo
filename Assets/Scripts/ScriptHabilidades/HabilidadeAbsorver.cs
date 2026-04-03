@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Habilidade Absorver", menuName = "SuperTrunfo/Habilidades/Absorver")]
+[CreateAssetMenu(fileName = "Habilidade Absorver", menuName = "Habilidades/Absorver")]
 public class HabilidadeAbsorver : HabilidadeBase
 {
     [Header("Configuração")]

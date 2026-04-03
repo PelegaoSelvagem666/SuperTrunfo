@@ -15,11 +15,13 @@ MonoBehaviour:
   nomeCarta: Guerreiro Doce
   arteCarta: {fileID: 21300000, guid: b297b43ccbfd7b57fb486ccaa5babd7d, type: 3}
   classe: 2
-  tipo1: 0
-  tipo2: 0
+  tipo: 5
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "\xC9 MUITO CREMOSO"
+  descricaoHabilidade: "Ao entrar em campo como resposta uma carta atacante, devolve
+    a carta do oponente a m\xE3o e o obriga a jogar uma carta diferente. Efeito n\xE3o
+    se ativa caso seja a \xFAltima carta do oponente."
+  habilidadeEspecial: {fileID: 11400000, guid: 6a7d2473a5a73e654b481e37c6469998, type: 2}
   forca: 790
   magia: 705
   agilidade: 619

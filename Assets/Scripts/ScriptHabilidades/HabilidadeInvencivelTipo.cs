@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic; 
 
-[CreateAssetMenu(fileName = "Imune a Tipos", menuName = "SuperTrunfo/Habilidades/Invencivel Contra Tipos")]
+[CreateAssetMenu(fileName = "Imune a Tipos", menuName = "Habilidades/Invencivel Contra Tipos")]
 public class HabilidadeInvencivelTipo : HabilidadeBase
 {
     [Header("Configuração da Imunidade")]

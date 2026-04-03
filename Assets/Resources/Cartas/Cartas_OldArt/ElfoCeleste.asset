@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0826797fee2f4f2b4b1b53f99dce71e4, type: 3}
+  m_Name: ElfoCeleste
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  nomeCarta: Elfo Celeste
+  arteCarta: {fileID: 21300000, guid: 0535add25b17f5a15bbf25a5d8e5ea87, type: 3}
+  classe: 3
+  tipo: 4
+  moral: 0
+  tituloHabilidade: "Guardi\xE3o da Luz"
+  descricaoHabilidade: "Enfraquece em 150 pontos inimigos do tipo Trevas ou Esp\xEDrito "
+  habilidadeEspecial: {fileID: 11400000, guid: c6e57457fc00a29e3aa57ca6e8ddc2c6, type: 2}
+  forca: 361
+  magia: 626
+  agilidade: 311
+  inteligencia: 651

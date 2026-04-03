@@ -3,18 +3,19 @@ using System.Collections;
 
 public abstract class HabilidadeBase : ScriptableObject
 {
-    // Habilidades de Combate (Absorvel, Buff, Quebra de Regra, etc)
+    // 1. Habilidade Instantânea (Antiga)
     public virtual void AtivarHabilidade(CardDisplay usuario, CardDisplay alvo) { }
+
+    // 2. Habilidade de Combate (Pausa o duelo)
     public virtual IEnumerator AtivarHabilidadeCoroutine(CardDisplay usuario, CardDisplay alvo)
     {
         AtivarHabilidade(usuario, alvo); 
         yield break; 
     }
 
-    // --- NOVO: Habilidades de Entrada em Campo (Possessão) ---
+    // 3. Habilidade de Entrada em Campo (A que a Possessão precisa!)
     public virtual IEnumerator AoEntrarEmCampoCoroutine(CardDisplay usuario)
     {
-        // Por padrão não faz nada, só as cartas que sobrescreverem isso vão pausar o jogo
         yield break; 
     }
 }

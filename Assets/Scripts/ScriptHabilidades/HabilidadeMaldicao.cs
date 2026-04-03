@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Habilidade Maldicao", menuName = "SuperTrunfo/Habilidades/Maldicao do Cemiterio")]
+[CreateAssetMenu(fileName = "Habilidade Maldicao", menuName = "Habilidades/Maldicao do Cemiterio")]
 public class HabilidadeMaldicao : HabilidadeBase
 {
     [Header("Configuração")]

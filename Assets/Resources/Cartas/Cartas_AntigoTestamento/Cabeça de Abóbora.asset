@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "Cabe\xE7a de Ab\xF3bora"
   arteCarta: {fileID: 21300000, guid: 94ae9fe41d67de06ea835f71415dadd9, type: 3}
-  classe: 1
-  tipo1: 0
-  tipo2: 0
+  classe: 2
+  tipo: 12
   moral: 2
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: Terror no Milharal
+  descricaoHabilidade: Enfraquece em 150 pontos inimigos do Tipo Humano
+  habilidadeEspecial: {fileID: 11400000, guid: 1a0cdf77403a55864905ce221d99b2f2, type: 2}
   forca: 540
   magia: 820
   agilidade: 730

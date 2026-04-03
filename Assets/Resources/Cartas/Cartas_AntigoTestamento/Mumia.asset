@@ -15,10 +15,11 @@ MonoBehaviour:
   nomeCarta: "M\xFAmia"
   arteCarta: {fileID: 21300000, guid: 1b29d0b257b5c2ec2b4d3d82b39312f5, type: 3}
   classe: 2
-  tipo: 0
-  moral: 0
+  tipo: 8
+  moral: 2
   tituloHabilidade: 
   descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 693
   magia: 739
   agilidade: 614

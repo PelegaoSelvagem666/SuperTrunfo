@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu(fileName = "Possessão Manual", menuName = "SuperTrunfo/Habilidades/Possessão (Escolha Livre)")]
+[CreateAssetMenu(fileName = "Possessão Manual", menuName = "Habilidades/Possessão (Escolha Livre)")]
 public class HabilidadePossessaoManual : HabilidadeBase
 {
-    // 1. A MÁGICA ACONTECE AQUI (Fase de Entrada em Campo)
+    // A MÁGICA DEVE FICAR AQUI (Na entrada em campo)
     public override IEnumerator AoEntrarEmCampoCoroutine(CardDisplay usuario)
     {
         GameManager gm = Object.FindFirstObjectByType<GameManager>();
@@ -38,31 +38,25 @@ public class HabilidadePossessaoManual : HabilidadeBase
 
         if (cartaMortaEscolhida != null)
         {
-            // Clona o cardData para não alterar o arquivo original do jogo
             usuario.cardData = Instantiate(usuario.cardData);
 
-            // Copia apenas os atributos numéricos da carta morta
             usuario.cardData.forca = cartaMortaEscolhida.cardData.forca;
             usuario.cardData.magia = cartaMortaEscolhida.cardData.magia;
             usuario.cardData.agilidade = cartaMortaEscolhida.cardData.agilidade;
             usuario.cardData.inteligencia = cartaMortaEscolhida.cardData.inteligencia;
 
-            // Atualiza a carta na tela com os novos números
             usuario.AtualizarCarta(); 
             
             Debug.Log($"👻 POSSESSÃO! {usuario.cardData.nomeCarta} absorveu os atributos de {cartaMortaEscolhida.cardData.nomeCarta}!");
         }
     }
 
-    // 2. GARANTIA DE SEGURANÇA (Fase de Combate)
-    // Deixamos este método vazio para garantir que a carta não tente fazer nada na hora da luta, 
-    // afinal, ela já roubou os atributos quando entrou em campo!
+    // GARANTIA DE SEGURANÇA (Esvaziamos o combate para não rodar duas vezes ou na hora errada!)
     public override IEnumerator AtivarHabilidadeCoroutine(CardDisplay usuario, CardDisplay alvo)
     {
         yield break;
     }
 
-    // Funções auxiliares da Inteligência Artificial
     private CardDisplay PegarMelhorSoma(Transform cemiterio)
     {
         CardDisplay melhor = null;

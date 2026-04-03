@@ -18,8 +18,9 @@ MonoBehaviour:
   tipo: 1
   moral: 1
   tituloHabilidade: Esmagamento Quente
-  descricaoHabilidade: 
-  habilidadeEspecial: {fileID: 0}
+  descricaoHabilidade: Fortalece a si mesmo em 50 pontos contra inimigos de Moral
+    Bom
+  habilidadeEspecial: {fileID: 11400000, guid: dcd319992bcdb0e06bcb13eb934d4e94, type: 2}
   forca: 800
   magia: 500
   agilidade: 50

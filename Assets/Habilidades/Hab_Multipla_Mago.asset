@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8e74577622d00fda869bafe8696c7f, type: 3}
+  m_Name: Hab_Multipla_Mago
+  m_EditorClassIdentifier: Assembly-CSharp::Hab_Multipla
+  listaDeHabilidades:
+  - {fileID: 11400000, guid: c90953439fad7e8f7a73c8733ab2b898, type: 2}
+  - {fileID: 11400000, guid: faa2cb2647ddbbfbc84646a3dbce51c0, type: 2}

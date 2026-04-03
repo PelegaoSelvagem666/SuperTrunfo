@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: Butterfairy
   arteCarta: {fileID: 21300000, guid: c15d94328efe5410f8555cd5e0a35732, type: 3}
-  classe: 2
-  tipo1: 0
-  tipo2: 0
+  classe: 1
+  tipo: 6
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "P\xF3 de Fada"
+  descricaoHabilidade: "Recebe 75 pontos ao enfrentar inimigos do Tipo Trevas, Bestial
+    ou Esp\xEDrito"
+  habilidadeEspecial: {fileID: 11400000, guid: b5138e961b88718869f1facbbcfabf7d, type: 2}
   forca: 720
   magia: 880
   agilidade: 910

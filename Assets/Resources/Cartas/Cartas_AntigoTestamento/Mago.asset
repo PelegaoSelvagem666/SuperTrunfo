@@ -15,11 +15,12 @@ MonoBehaviour:
   nomeCarta: Mago
   arteCarta: {fileID: 21300000, guid: ad0916bb09cca8d70b81ee9155ce0bca, type: 3}
   classe: 1
-  tipo1: 0
-  tipo2: 0
+  tipo: 5
   moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tituloHabilidade: "Sabedoria Avan\xE7ada"
+  descricaoHabilidade: "Ao entrar, consegue vizualizar as cartas da m\xE3o do oponente.
+    Enfraquece inimigos do Tipo Trevas e Espirito em 50 pontos"
+  habilidadeEspecial: {fileID: 11400000, guid: 306142393eba2f73b8d1758008d8a9ba, type: 2}
   forca: 712
   magia: 950
   agilidade: 419

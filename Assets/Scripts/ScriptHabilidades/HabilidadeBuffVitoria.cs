@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Habilidade Buff Vitoria", menuName = "SuperTrunfo/Habilidades/Buff Após Vitória")]
+[CreateAssetMenu(fileName = "Habilidade Buff Vitoria", menuName = "Habilidades/Buff Após Vitória")]
 public class HabilidadeBuffVitoria : HabilidadeBase
 {
     [Header("Configuração")]

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0826797fee2f4f2b4b1b53f99dce71e4, type: 3}
+  m_Name: ElfoSombrio
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  nomeCarta: Elfo Sombrio
+  arteCarta: {fileID: 21300000, guid: b12c1178599d22667b9006ba0607031a, type: 3}
+  classe: 2
+  tipo: 8
+  moral: 2
+  tituloHabilidade: "Ca\xE7ador de Deuses"
+  descricaoHabilidade: Enfraquece inimigos do Tipo Cosmico ou Celestial em 150 pontos
+  habilidadeEspecial: {fileID: 11400000, guid: 1d1cec0b8c16090798720f88e556d625, type: 2}
+  forca: 426
+  magia: 721
+  agilidade: 764
+  inteligencia: 656

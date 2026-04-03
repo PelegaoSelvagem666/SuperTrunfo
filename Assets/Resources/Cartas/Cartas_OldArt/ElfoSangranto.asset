@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0826797fee2f4f2b4b1b53f99dce71e4, type: 3}
+  m_Name: ElfoSangranto
+  m_EditorClassIdentifier: Assembly-CSharp::CardData
+  nomeCarta: Elfo Sangrento
+  arteCarta: {fileID: 21300000, guid: 74f7838a4a5f6a8d6b2702372cfb1b15, type: 3}
+  classe: 2
+  tipo: 6
+  moral: 0
+  tituloHabilidade: "Ca\xE7ador de Feras"
+  descricaoHabilidade: Recebe 150 pontos ao enfrentar inimigos do Tipo Natureza ou
+    Bestial
+  habilidadeEspecial: {fileID: 11400000, guid: 030cced9cc7fb619993b843a2cc420c4, type: 2}
+  forca: 717
+  magia: 683
+  agilidade: 778
+  inteligencia: 809

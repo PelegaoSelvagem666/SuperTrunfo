@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   nomeCarta: "Dem\xF4nio Boxeador"
   arteCarta: {fileID: 21300000, guid: 9d3f892dbe4ab4e6683212c125961331, type: 3}
-  classe: 4
-  tipo: 0
-  moral: 0
+  classe: 3
+  tipo: 1
+  moral: 2
   tituloHabilidade: 
   descricaoHabilidade: 
-  forca: 0
-  magia: 0
-  agilidade: 0
-  inteligencia: 0
+  habilidadeEspecial: {fileID: 0}
+  forca: 763
+  magia: 313
+  agilidade: 747
+  inteligencia: 157

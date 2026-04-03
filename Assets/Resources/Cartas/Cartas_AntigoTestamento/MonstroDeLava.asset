@@ -15,10 +15,11 @@ MonoBehaviour:
   nomeCarta: Monstro de Lava
   arteCarta: {fileID: 21300000, guid: 6b4ec7fdda061ceed87e329fe3d9c631, type: 3}
   classe: 4
-  tipo: 0
-  moral: 0
+  tipo: 1
+  moral: 2
   tituloHabilidade: 
   descricaoHabilidade: 
+  habilidadeEspecial: {fileID: 0}
   forca: 602
   magia: 564
   agilidade: 143

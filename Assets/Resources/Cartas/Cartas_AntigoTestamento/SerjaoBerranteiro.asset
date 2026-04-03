@@ -15,7 +15,7 @@ MonoBehaviour:
   nomeCarta: "Serj\xE3o Berranteiro"
   arteCarta: {fileID: 21300000, guid: fa2bfec3af39b8665b2102106390cec3, type: 3}
   classe: 0
-  tipo: 0
+  tipo: 5
   moral: 0
   tituloHabilidade: Aqui tem coragem
   descricaoHabilidade: "Essa carta faz a decis\xE3o de atributo sempre, independente

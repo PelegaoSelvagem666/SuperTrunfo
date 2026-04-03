@@ -15,10 +15,11 @@ MonoBehaviour:
   nomeCarta: Zumbi
   arteCarta: {fileID: 21300000, guid: 9dbd562d6e65db3449328fe89150a278, type: 3}
   classe: 4
-  tipo: 0
-  moral: 0
-  tituloHabilidade: 
-  descricaoHabilidade: 
+  tipo: 8
+  moral: 2
+  tituloHabilidade: Poder dos Mortos
+  descricaoHabilidade: "Ganha 100 pontos para cada carta no seu cemit\xE9rio"
+  habilidadeEspecial: {fileID: 11400000, guid: 7a51daf8d715fd7e2a837a5c7e15952b, type: 2}
   forca: 318
   magia: 429
   agilidade: 393

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Nova Habilidade Serjao", menuName = "SuperTrunfo/Habilidades/Quebra Regra (Serjao)")]
+[CreateAssetMenu(fileName = "Nova Habilidade Serjao", menuName = "Habilidades/Quebra Regra (Serjao)")]
 public class HabilidadeQuebraRegra : HabilidadeBase
 {
     public override void AtivarHabilidade(CardDisplay usuario, CardDisplay alvo)
