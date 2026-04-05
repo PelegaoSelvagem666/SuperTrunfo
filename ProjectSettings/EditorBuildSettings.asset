@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SelecaoDeck.unity
     guid: f8403eca0301eb96bab982fb876cf3c7
+  - enabled: 1
+    path: Assets/Scenes/CenaMoeda.unity
+    guid: deeb833b0657c48aaa75c7740f18aa33
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

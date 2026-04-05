@@ -6,28 +6,29 @@ public class Hab_RepelirAtaque : HabilidadeBase
 {
     public override IEnumerator AtivarHabilidadeCoroutine(CardDisplay cartaUsuario, CardDisplay cartaInimiga)
     {
-        // --- A TRAVA ANTI-LOOP AQUI ---
-        // Se a habilidade já disparou nesta rodada, ele ignora e a porradaria acontece!
-        if (GameManager.instancia.habilidadeJaUsada) 
+        if (GameManager.instancia.habilidadeJaUsada) yield break;
+
+        bool souDefensor = (cartaUsuario.pertenceAoJogador && !GameManager.instancia.turnoDoJogador) ||
+                           (!cartaUsuario.pertenceAoJogador && GameManager.instancia.turnoDoJogador);
+
+        if (!souDefensor) yield break;
+
+        Transform maoDoAtacante = GameManager.instancia.turnoDoJogador ? GameManager.instancia.maoJogador : GameManager.instancia.maoAdversario;
+        
+        if (maoDoAtacante.childCount == 0)
         {
+            Debug.Log($"Armadilha falhou: O atacante não tem outras cartas!");
             yield break;
         }
 
-        if (!GameManager.instancia.turnoDoJogador && GameManager.instancia.maoAdversario.childCount > 0)
-        {
-            Debug.Log($"{cartaUsuario.cardData.nomeCarta} usou Armadilha! A carta do oponente foi devolvida!");
+        GameManager.instancia.habilidadeJaUsada = true;
+        GameManager.instancia.interrupcaoDeHabilidade = true; 
 
-            // MARCA QUE JÁ USOU: Agora ela sabe que não deve repetir com a próxima carta!
-            GameManager.instancia.habilidadeJaUsada = true;
-            
-            GameManager.instancia.interrupcaoDeHabilidade = true;
-            GameManager.instancia.ForcarTrocaDeCartaAdversario(cartaInimiga);
-        }
-        else
-        {
-            Debug.Log("Armadilha falhou: Ou você iniciou o ataque, ou era a última carta do oponente!");
-        }
+        Debug.Log($"🛡️ ARMADILHA! {cartaUsuario.cardData.nomeCarta} repeliu o ataque!");
+
+        // Aciona o Rebobinador no GameManager!
+        GameManager.instancia.RebobinarAtaqueRepelido(cartaInimiga);
         
-        yield return null;
+        yield return new WaitForSeconds(1.5f);
     }
 }

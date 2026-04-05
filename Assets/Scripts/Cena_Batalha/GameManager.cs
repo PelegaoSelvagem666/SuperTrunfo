@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.UI; 
 using TMPro;
 using UnityEngine.SceneManagement;
+using Mirror;
 
 public class GameManager : MonoBehaviour
 {
+    [HideInInspector] public CardDisplay cartaDoOponenteNaArena;
+    [HideInInspector] public CardDisplay cartaBloqueadaNestaRodada;
+    [HideInInspector] public string resultadoMoedaRede = "";
     public static GameManager instancia;
 
     [Header("Configurações do Baralho")]
@@ -86,6 +90,10 @@ public class GameManager : MonoBehaviour
     public GameObject painelVisualizadorCemiterio;
     public Transform conteudoGradeCemiterio; 
     public GameObject prefabIconeCemiterio;  
+    [Header("Interface de Rede & Turnos")]
+    public TextMeshProUGUI textoIndicadorTurno;
+    public string nickDoJogador;
+
 
     private int pontosJogador = 0;
     private int pontosOponente = 0;
@@ -102,13 +110,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // 1. FAXINA VISUAL (Faz isso em qualquer modo)
         modificadorGlobalJogador = 0;
         modificadorGlobalOponente = 0;
         if (painelEscolhaAtributo != null) painelEscolhaAtributo.SetActive(false);
         if (grupoBotoesAtributoInspecao != null) grupoBotoesAtributoInspecao.SetActive(false);
         if (painelCartaDetalhe != null) painelCartaDetalhe.gameObject.SetActive(false);
-
-        DesativarImagensDeResultado(); 
+        DesativarImagensDeResultado();
 
         vitoriasJogador = 0;
         vitoriasOponente = 0;
@@ -117,16 +125,82 @@ public class GameManager : MonoBehaviour
         indiceCompra = 0;
         AtualizarPlacares();
 
-        CarregarDeckSalvoDoJogador();
+        nickDoJogador = PlayerPrefs.GetString("NickJogador", "Pelego");
 
+        // 2. CARREGA O SEU DECK (Apenas o seu por enquanto)
+        CarregarDeckSalvoDoJogador();
+        EmbaralharDeck(baralhoJogador);
+
+        // ==========================================
+        // 3. A REGRA DE AUTORIDADE DO SERVIDOR DEDICADO!
+        // ==========================================
+        bool ehServidorDedicado = NetworkServer.active && !NetworkClient.active;
+        string modoJogo = PlayerPrefs.GetString("ModoJogo", "Bot"); 
+
+        if (ehServidorDedicado)
+        {
+            Debug.Log("<color=yellow>[SERVIDOR]</color> Arena pronta e aguardando comandos de rede...");
+            return; // O SERVIDOR LINUX PARA DE LER O CÓDIGO AQUI. ELE NÃO COMPRA CARTAS SOZINHO!
+        }
+
+        // ==========================================
+        // 4. MODO MULTIPLAYER (Cliente)
+        // ==========================================
+        if (modoJogo != "Bot")
+        {
+            if (textoAvisoIA != null) 
+            {
+                textoAvisoIA.text = "Modo Online: Sincronizando conexão...";
+                textoAvisoIA.gameObject.SetActive(true);
+            }
+
+            StartCoroutine(RotinaEnviarDeckSeguro());
+            return; // O Cliente para aqui e espera o Mirror!
+        }
+
+        // ==========================================
+        // 5. MODO OFFLINE (CONTRA O BOT) CONTINUA AQUI
+        // ==========================================
         if (oponenteAtual != null)
         {
             baralhoOponente = new List<CardData>(oponenteAtual.deckPreDefinido);
         }
-
-        EmbaralharDeck(baralhoJogador);
         EmbaralharDeck(baralhoOponente);
+        
+        int quemComeca = PlayerPrefs.GetInt("JogadorComeca", 1);
+        turnoDoJogador = (quemComeca == 1);
+        AtualizarTextoDeTurno();
+
         StartCoroutine(DistribuirCartasAnimado());
+    }
+    
+        private IEnumerator RotinaEnviarDeckSeguro()
+    {
+        // 1. O jogo fica em loop travado aqui até o Mirror invocar o seu JogadorRede!
+        while (NetworkClient.localPlayer == null)
+        {
+            yield return null;
+        }
+
+        // 2. Agora que temos 100% de certeza que o Fantasma está na arena, preparamos o pacote
+        string meuDeckEmbaralhado = "";
+        foreach (CardData carta in baralhoJogador) 
+        {
+            meuDeckEmbaralhado += carta.name + ",";
+        }
+        
+        // 3. E enviamos com segurança!
+        NetworkClient.localPlayer.GetComponent<JogadorRede>().CmdEnviarDeckParaServidor(meuDeckEmbaralhado.TrimEnd(','));
+    }
+    public void AtualizarTextoDeTurno()
+    {
+        if (textoIndicadorTurno != null)
+        {
+            if (turnoDoJogador)
+                textoIndicadorTurno.text = $"TURNO DE: <color=#00FFFF>{nickDoJogador.ToUpper()}</color>";
+            else
+                textoIndicadorTurno.text = $"TURNO DE: <color=#FF4444>{oponenteAtual.nomeDoBot.ToUpper()}</color>";
+        }
     } 
 
     void Update()
@@ -138,15 +212,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CarregarDeckSalvoDoJogador()
+   private void CarregarDeckSalvoDoJogador()
     {
         baralhoJogador.Clear();
         CardData[] todasAsCartas = Resources.LoadAll<CardData>("Cartas");
         List<CardData> acervoCompleto = new List<CardData>(todasAsCartas);
 
-        string idDeck = "1"; 
-        if (GerenciadorDeDeck.instancia != null && !string.IsNullOrEmpty(GerenciadorDeDeck.instancia.deckIdAtual))
-            idDeck = GerenciadorDeDeck.instancia.deckIdAtual;
+        // A MÁGICA AQUI: Puxa o ID salvo diretamente da memória permanente do jogo!
+        string idDeck = PlayerPrefs.GetString("DeckPrincipalID", "1"); 
         
         string chaveDoDeck = "MeuDeckSalvo_" + idDeck;
 
@@ -273,20 +346,17 @@ private IEnumerator DistribuirCartasAnimado()
         }     
 
 // --- A MÁGICA DA OPÇÃO C AQUI ---
-        // Só acende os botões de ataque se for a carta da arena, for o turno do jogador 
-        // E o jogo NÃO estiver pausado esperando o botão Continuar!
-        if (cartaClicada == cartaDoJogadorNaArena && turnoDoJogador && !aguardandoConfirmacao)
+        // Adicionada a trava '!jogoPausado' para não deixar atacar de novo!
+        if (cartaClicada == cartaDoJogadorNaArena && turnoDoJogador && !aguardandoConfirmacao && !jogoPausado)
         {
             if (grupoBotoesAtributoInspecao != null) 
             {
                 grupoBotoesAtributoInspecao.SetActive(true);
-                // Desfoca qualquer botão para evitar o "fantasma do teclado"
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             }
         }
         else
         {
-            // Se estivermos esperando o Continuar, os botões dourados ficam escondidos!
             if (grupoBotoesAtributoInspecao != null) grupoBotoesAtributoInspecao.SetActive(false);
         }
     } // <-- Fim da função InspecionarCarta
@@ -300,6 +370,11 @@ private IEnumerator DistribuirCartasAnimado()
         cartaDoJogadorNaArena.AtualizarCarta(); 
 
         StartCoroutine(RotinaEntradaNaArena(cartaDoJogadorNaArena));
+        // --- ENVIO PARA A REDE ---
+        if (PlayerPrefs.GetString("ModoJogo", "Bot") != "Bot")
+        {
+            NetworkClient.localPlayer.GetComponent<JogadorRede>().CmdJogarCarta(cartaDoJogador.cardData.name);
+        }
     }
 
     private IEnumerator RotinaEntradaNaArena(CardDisplay carta)
@@ -309,14 +384,33 @@ private IEnumerator DistribuirCartasAnimado()
             yield return StartCoroutine(carta.cardData.habilidadeEspecial.AoEntrarEmCampoCoroutine(carta));
         }
 
-        if (turnoDoJogador)
+if (turnoDoJogador)
         {
-           // Opção C: Auto-Inspeciona a carta para o jogador já clicar no status!
-           InspecionarCarta(carta);
+            // Se o oponente já tem carta (Guerreiro Doce) e o atributo já existe, 
+            // significa que VOCÊ foi repelido e acabou de arrastar uma carta nova.
+            if (cartaDoOponenteNaArena != null && !string.IsNullOrEmpty(atributoEmDisputa))
+            {
+                // Retoma o duelo com o mesmo atributo! (O envio da carta já foi feito na função anterior)
+                StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaDoOponenteNaArena, atributoEmDisputa));
+            }
+            else
+            {
+                // Fluxo normal do primeiro ataque
+                InspecionarCarta(carta); 
+            }
         }
         else
         {
-          StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaAtacanteIA, atributoAtaqueIA));
+            if (PlayerPrefs.GetString("ModoJogo", "Bot") != "Bot")
+            {
+                // Online: Duelo contra a carta real do seu amigo!
+                StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaDoOponenteNaArena, atributoEmDisputa));
+            }
+            else
+            {
+                // Offline: Duelo contra o Bot
+                StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaAtacanteIA, atributoAtaqueIA));
+            }
         }
     }
 
@@ -326,8 +420,10 @@ private IEnumerator DistribuirCartasAnimado()
     public void EscolherAgilidade() { IniciarBatalha("Agilidade"); }
     public void EscolherInteligencia() { IniciarBatalha("Inteligência"); }
 
-    public void CancelarJogada()
+public void CancelarJogada()
     {
+        if (jogoPausado) return; // Não deixa o jogador devolver a carta pra mão se o combate já começou!
+
         if (cartaDoJogadorNaArena != null)
         {
             cartaDoJogadorNaArena.ResetarBonus();
@@ -337,20 +433,29 @@ private IEnumerator DistribuirCartasAnimado()
         if (grupoBotoesAtributoInspecao != null) grupoBotoesAtributoInspecao.SetActive(false);
     }
 
-   private void IniciarBatalha(string atributoEscolhido)
+private void IniciarBatalha(string atributoEscolhido)
     {
-        if (aguardandoConfirmacao) 
+        // CADEADO DE SEGURANÇA MÁXIMA: Impede que o botão seja apertado duas vezes!
+        if (aguardandoConfirmacao || jogoPausado) 
         {
-            Debug.Log("Você precisa fechar a visão do Mago clicando em Continuar antes de atacar!");
+            Debug.Log("Ação bloqueada! O duelo já começou!");
             return;
         }
+        
+        jogoPausado = true; // TRAVA O JOGO AQUI!
         
         if (grupoBotoesAtributoInspecao != null) grupoBotoesAtributoInspecao.SetActive(false);
         FecharInspecao();
 
         Debug.Log($"👤 TURNO DO JOGADOR: Você escolheu disputar {atributoEscolhido.ToUpper()}!");
         
-        // Passa a bola para a corrotina para podermos ter tempo das animações
+        if (PlayerPrefs.GetString("ModoJogo", "Bot") != "Bot")
+        {
+            atributoEmDisputa = atributoEscolhido;
+            NetworkClient.localPlayer.GetComponent<JogadorRede>().CmdEscolherAtributo(atributoEscolhido); 
+            return;
+        }
+        
         StartCoroutine(RotinaIniciarBatalha(atributoEscolhido));
     }
 
@@ -470,6 +575,12 @@ private CardDisplay EscolherCartaDaIA(string atributo)
 
     public void TurnoDaIA()
     {
+        string modoJogo = PlayerPrefs.GetString("ModoJogo", "Bot");
+        if (modoJogo != "Bot") 
+        {
+            // Se for online, a IA morre aqui! O jogo congela esperando a jogada do amigo.
+            return; 
+        }
         jogoPausado = false; 
         if (maoAdversario.childCount == 0) return; 
 
@@ -585,13 +696,7 @@ public int PegarValorAtributo(CardData carta, string atributo)
 
   private IEnumerator ResolverDuelo(CardDisplay cartaJogador, CardDisplay cartaOponente, string atributo)
     {
-        atributoEmDisputa = atributo;
-        cartaJogador.ResetarBonus();
-        cartaOponente.ResetarBonus();
-
-        cartaJogador.valorTemporarioBonus += modificadorGlobalJogador + buffProximaCartaJogador;
-        cartaOponente.valorTemporarioBonus += modificadorGlobalOponente + buffProximaCartaOponente;
-        
+        atributoEmDisputa = atributo;        
         buffProximaCartaJogador = 0;
         buffProximaCartaOponente = 0;
 
@@ -674,6 +779,7 @@ public int PegarValorAtributo(CardData carta, string atributo)
         promessaBuffVitoriaOponente = 0;
         
         AtualizarPlacares();
+        AtualizarTextoDeTurno();
         jogoPausado = true;
         
         StartCoroutine(RotinaFimDeTurno(cartaJogador, cartaOponente, mensagemDeCombate));
@@ -692,6 +798,8 @@ public int PegarValorAtributo(CardData carta, string atributo)
 
         cartaDoJogadorNaArena = null;
         cartaAtacanteIA = null;
+        cartaDoOponenteNaArena = null; 
+        atributoEmDisputa = "";
 
         if (pontosJogador >= 3 || pontosOponente >= 3 || maoJogador.childCount == 0 || maoAdversario.childCount == 0) StartCoroutine(EncerrarRodada());
         else { jogoPausado = false; if (!turnoDoJogador) TurnoDaIA(); }
@@ -706,6 +814,7 @@ public int PegarValorAtributo(CardData carta, string atributo)
         else if (pontosOponente > pontosJogador) { vitoriasOponente++; turnoDoJogador = false; }
         
         AtualizarPlacares();
+        AtualizarTextoDeTurno();
 
         if (vitoriasJogador >= 3 || vitoriasOponente >= 3 || indiceCompra >= baralhoJogador.Count || indiceCompra >= baralhoOponente.Count)
         {
@@ -728,6 +837,9 @@ public int PegarValorAtributo(CardData carta, string atributo)
         AtualizarPlacares();
         modificadorGlobalJogador = 0;
         modificadorGlobalOponente = 0;
+        atributoEmDisputa = ""; 
+        atributoEmDisputa = "";
+        cartaBloqueadaNestaRodada = null; 
         StartCoroutine(DistribuirCartasAnimado());
     }
 
@@ -750,7 +862,18 @@ public int PegarValorAtributo(CardData carta, string atributo)
         StartCoroutine(RetornarAoMenuAposFim());
     }
 
-    private IEnumerator RetornarAoMenuAposFim() { yield return new WaitForSeconds(4f); SceneManager.LoadScene("MenuPrincipal"); }
+private IEnumerator RetornarAoMenuAposFim() 
+    { 
+        yield return new WaitForSeconds(4f); 
+        
+        // Desliga o servidor fantasma do Bot antes de voltar ao menu!
+        if (PlayerPrefs.GetString("ModoJogo", "Bot") == "Bot" && NetworkServer.active)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+        
+        SceneManager.LoadScene("MenuPrincipal"); 
+    }
 
     private void AtivarImagem(Image img) { if (img != null) { if (img.transform.parent != null) { img.transform.parent.gameObject.SetActive(true); img.transform.parent.SetAsLastSibling(); } img.gameObject.SetActive(true); img.transform.SetAsLastSibling(); } }
 
@@ -838,9 +961,16 @@ public int PegarValorAtributo(CardData carta, string atributo)
     public GameObject painelConfiguracoes;
     public void AbrirConfiguracoes() { if (painelConfiguracoes != null) { painelConfiguracoes.SetActive(true); painelConfiguracoes.transform.SetAsLastSibling(); } }
     public void FecharConfiguracoes() { if (painelConfiguracoes != null) painelConfiguracoes.SetActive(false); }
-    public void BotaoRenderSe() { SceneManager.LoadScene("MenuPrincipal"); }
-
-
+public void BotaoRenderSe() 
+    { 
+        // Desliga o servidor fantasma do Bot caso o jogador desista!
+        if (PlayerPrefs.GetString("ModoJogo", "Bot") == "Bot" && NetworkServer.active)
+        {
+            NetworkManager.singleton.StopHost();
+        }
+        
+        SceneManager.LoadScene("MenuPrincipal"); 
+    }
     public void ForcarTrocaDeCartaAdversario(CardDisplay cartaAntiga)
     {
         StartCoroutine(RotinaTrocaCartaAdversario(cartaAntiga));
@@ -892,6 +1022,46 @@ public int PegarValorAtributo(CardData carta, string atributo)
             StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, novaCarta, atributoEmDisputa));
         }
     }
+    public void ForcarTrocaDeCartaJogador(CardDisplay cartaAntiga, CardDisplay cartaDefensoraDaIA)
+    {
+        StartCoroutine(RotinaTrocaCartaJogador(cartaAntiga, cartaDefensoraDaIA));
+    }
+
+    private IEnumerator RotinaTrocaCartaJogador(CardDisplay cartaAntiga, CardDisplay cartaDefensoraDaIA)
+    {
+        cartaAntiga.gameObject.SetActive(false); 
+
+        if (textoAvisoIA != null) 
+        {
+            textoAvisoIA.text = "Ataque Repelido!\nO oponente forçou você a trocar de carta!";
+            textoAvisoIA.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(2.5f);
+
+        // Devolve sua carta original em segurança pra sua mão
+        cartaAntiga.transform.SetParent(maoJogador, false);
+        cartaAntiga.ResetarBonus();
+        cartaAntiga.gameObject.SetActive(true);
+        cartaAntiga.AtualizarCarta();
+
+        // Puxa uma carta ALEATÓRIA da sua mão para a arena (Efeito Caos)
+        int indexAleatorio = Random.Range(0, maoJogador.childCount);
+        CardDisplay novaCarta = maoJogador.GetChild(indexAleatorio).GetComponent<CardDisplay>();
+
+        cartaDoJogadorNaArena = novaCarta;
+        
+        novaCarta.transform.SetParent(canvasPrincipal.transform);
+        novaCarta.transform.position = new Vector3((Screen.width / 2) - 250, Screen.height / 2, 0);
+        novaCarta.transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
+        novaCarta.valorTemporarioBonus = modificadorGlobalJogador + buffProximaCartaJogador;
+        novaCarta.AtualizarCarta();
+
+        if (textoAvisoIA != null) textoAvisoIA.text = $"Você foi puxado para a arena com: {novaCarta.cardData.nomeCarta}!";
+        yield return new WaitForSeconds(2f);
+        
+        // Reinicia a porradaria e deixa o Duelo seguir naturalmente!
+        StartCoroutine(ResolverDuelo(novaCarta, cartaDefensoraDaIA, atributoEmDisputa));
+    }
     // --- LÓGICA DA MOEDA ---
     public void EscolherCara()
     {
@@ -915,20 +1085,7 @@ public int PegarValorAtributo(CardData carta, string atributo)
         return carta.forca + carta.magia + carta.agilidade + carta.inteligencia;
     }
 
-    // Lê o valor exato do atributo que está sendo disputado
-    private int PegarValorDoAtributo(CardData carta, string atributo)
-    {
-        switch (atributo.ToLower())
-        {
-            case "forca": return carta.forca;
-            case "magia": return carta.magia;
-            case "agilidade": return carta.agilidade;
-            case "inteligencia": return carta.inteligencia;
-            default: return 0;
-        }
-    }
-
-    // Acha qual é o melhor atributo que uma carta tem e retorna o nome dele e o valor
+// Acha qual é o melhor atributo que uma carta tem e retorna o nome dele e o valor
     private (string, int) DescobrirMelhorAtributo(CardData carta)
     {
         string melhor = "Força";
@@ -936,8 +1093,166 @@ public int PegarValorAtributo(CardData carta, string atributo)
 
         if (carta.magia > maiorValor) { maiorValor = carta.magia; melhor = "Magia"; }
         if (carta.agilidade > maiorValor) { maiorValor = carta.agilidade; melhor = "Agilidade"; }
-        if (carta.inteligencia > maiorValor) { maiorValor = carta.inteligencia; melhor = "Inteligencia"; }
+        if (carta.inteligencia > maiorValor) { maiorValor = carta.inteligencia; melhor = "Inteligência"; } // <-- ACENTO CORRIGIDO AQUI!
 
         return (melhor, maiorValor);
+    }
+    
+// ==========================================
+    // INTEGRAÇÃO MULTIPLAYER (O CORREIO)
+    // ==========================================
+    public void ReceberDeckDoOponente(string deckString, string nickDoOponente)
+    {
+        // 1. Limpa o baralho vazio e carrega o catálogo de cartas
+        baralhoOponente.Clear();
+        CardData[] todasAsCartas = Resources.LoadAll<CardData>("Cartas");
+        List<CardData> acervoCompleto = new List<CardData>(todasAsCartas);
+
+        // 2. Transforma o texto (ex: "Fogo,Dragao,Zumbi") em cartas reais
+        string[] nomes = deckString.Split(',');
+        foreach (string nomeArquivo in nomes)
+        {
+            CardData cartaEncontrada = acervoCompleto.Find(c => c.name == nomeArquivo);
+            if (cartaEncontrada != null) baralhoOponente.Add(cartaEncontrada);
+        }
+
+        // 3. Substitui o nome do Bot pelo Nick real do seu amigo!
+        if (oponenteAtual != null) 
+        {
+            oponenteAtual.nomeDoBot = nickDoOponente;
+        }
+
+        // 4. Esconde a placa de "Aguardando oponente..."
+        if (textoAvisoIA != null) textoAvisoIA.gameObject.SetActive(false);
+
+        // 5. Lê quem a moeda decidiu que começa e atualiza a UI
+        int quemComeca = PlayerPrefs.GetInt("JogadorComeca", 1);
+        turnoDoJogador = (quemComeca == 1);
+        AtualizarTextoDeTurno();
+
+        Debug.Log($"<color=yellow>[SISTEMA]</color> Tudo pronto! Iniciando duelo contra {nickDoOponente}!");
+
+        // 6. A PORRADARIA COMEÇA!
+        StartCoroutine(DistribuirCartasAnimado());
+    }
+// ==========================================
+    // RECEBENDO JOGADAS PELA REDE
+    // ==========================================
+    public void ReceberCartaOponenteRede(string nomeCarta)
+    {
+        // 1. Vasculha a mão do adversário para achar a carta que ele jogou
+        CardDisplay cartaJogada = null;
+        foreach (Transform filho in maoAdversario)
+        {
+            CardDisplay c = filho.GetComponent<CardDisplay>();
+            if (c != null && c.cardData.name == nomeCarta)
+            {
+                cartaJogada = c;
+                break;
+            }
+        }
+
+        if (cartaJogada != null)
+        {
+            // 2. Coloca a carta do oponente na arena!
+            cartaDoOponenteNaArena = cartaJogada;
+            cartaJogada.transform.SetParent(canvasPrincipal.transform);
+            
+            cartaJogada.transform.position = new Vector3((Screen.width / 2) + 250, Screen.height / 2, 0); 
+            cartaJogada.transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
+            
+            if (cartaJogada.imagemVerso != null) cartaJogada.imagemVerso.gameObject.SetActive(false);
+            cartaJogada.AtualizarCarta();
+
+            Debug.Log($"<color=orange>[REDE]</color> O oponente invocou: {nomeCarta}");
+
+            // 3. Se era o SEU turno de atacar, as duas cartas já estão na mesa. É hora do duelo!
+            if (turnoDoJogador)
+            {
+                StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaDoOponenteNaArena, atributoEmDisputa));
+            }
+            // --- ADICIONE ESTE ELSE IF ABAIXO ---
+            else if (!turnoDoJogador && cartaDoJogadorNaArena != null && !string.IsNullOrEmpty(atributoEmDisputa))
+            {
+                // Se o oponente foi repelido e mandou uma carta nova pela rede, retoma o duelo!
+                StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaDoOponenteNaArena, atributoEmDisputa));
+            }
+        }
+    }
+
+    public void ReceberAtributoOponenteRede(string atributo)
+    {
+        atributoEmDisputa = atributo;
+        
+        if (textoAvisoIA != null)
+        {
+            textoAvisoIA.text = $"Oponente atacou com: {atributo}!\nSua vez de defender!";
+            textoAvisoIA.gameObject.SetActive(true);
+        }
+        
+        Debug.Log($"<color=orange>[REDE]</color> O atributo da morte foi escolhido: {atributo}");
+    }
+    // ==========================================
+    // SISTEMA DE REBOBINAR ATAQUE (REPULSÃO)
+    // ==========================================
+    public void RebobinarAtaqueRepelido(CardDisplay cartaRepelida)
+    {
+        cartaBloqueadaNestaRodada = cartaRepelida;
+
+        if (cartaRepelida.pertenceAoJogador)
+        {
+            // Sua carta volta pra mão e a arena espera você arrastar outra
+            cartaRepelida.transform.SetParent(maoJogador);
+            cartaDoJogadorNaArena = null;
+            if (textoAvisoIA != null)
+            {
+                textoAvisoIA.text = "Ataque Repelido!\nSua carta voltou. Arraste uma carta DIFERENTE para continuar!";
+                textoAvisoIA.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            // A carta do oponente/bot volta pra mão dele
+            cartaRepelida.transform.SetParent(maoAdversario);
+            cartaDoOponenteNaArena = null;
+            if (cartaRepelida.imagemVerso != null) cartaRepelida.imagemVerso.gameObject.SetActive(true);
+            
+            if (textoAvisoIA != null)
+            {
+                textoAvisoIA.text = "Você repeliu o ataque!\nAguardando o oponente escolher outra carta...";
+                textoAvisoIA.gameObject.SetActive(true);
+            }
+
+            // Se for o Bot atacando, ele é obrigado a escolher e jogar outra carta sozinho
+            if (PlayerPrefs.GetString("ModoJogo", "Bot") == "Bot")
+            {
+                StartCoroutine(BotJogaOutraCartaAposRepel());
+            }
+        }
+    }
+
+    private IEnumerator BotJogaOutraCartaAposRepel()
+    {
+        yield return new WaitForSeconds(2f);
+        CardDisplay novaCarta = null;
+        
+        // Bot puxa a primeira carta da mão que seja diferente da repelida
+        foreach(Transform filho in maoAdversario)
+        {
+            CardDisplay c = filho.GetComponent<CardDisplay>();
+            if (c != cartaBloqueadaNestaRodada) { novaCarta = c; break; }
+        }
+
+        if (novaCarta != null)
+        {
+            cartaDoOponenteNaArena = novaCarta;
+            novaCarta.transform.SetParent(canvasPrincipal.transform);
+            novaCarta.transform.position = new Vector3((Screen.width / 2) + 250, Screen.height / 2, 0); 
+            novaCarta.transform.localScale = new Vector3(0.65f, 0.65f, 0.65f);
+            novaCarta.AtualizarCarta();
+            
+            // Bot retoma o duelo imediatamente com o mesmo atributo!
+            StartCoroutine(ResolverDuelo(cartaDoJogadorNaArena, cartaDoOponenteNaArena, atributoEmDisputa));
+        }
     }
 }

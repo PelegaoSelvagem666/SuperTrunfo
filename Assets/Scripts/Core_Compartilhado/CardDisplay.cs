@@ -181,14 +181,35 @@ public class CardDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         } 
     }
     
-    public void OnBeginDrag(PointerEventData eventData) 
+public void OnBeginDrag(PointerEventData eventData) 
     { 
         if (GameManager.instancia == null) return; // <-- Trava de Segurança
         
         if (this == GameManager.instancia.painelCartaDetalhe) return;
 
         if (!pertenceAoJogador || GameManager.instancia.cartaDoJogadorNaArena != null || GameManager.instancia.jogoPausado || transform.parent != GameManager.instancia.maoJogador) return; 
-        
+
+// --- TRAVA DE TURNO E ANSIEDADE ---
+        // Se NÃO é o meu turno de atacar...
+        if (!GameManager.instancia.turnoDoJogador)
+        {
+            // Eu SÓ POSSO arrastar minha carta se o oponente já tiver jogado a dele e o atributo já estiver definido!
+            if (string.IsNullOrEmpty(GameManager.instancia.atributoEmDisputa))
+            {
+                Debug.LogWarning("Bloqueado! Aguarde o oponente jogar a carta e escolher o atributo.");
+                eventData.pointerDrag = null; // <-- MATA O ARRASTO AQUI!
+                return; // Cancela o clique/arrasto na hora!
+            }
+            
+        }
+        // --- TRAVA DA CARTA REPELIDA ---
+        if (GameManager.instancia.cartaBloqueadaNestaRodada == this)
+        {
+            Debug.LogWarning("Esta carta foi repelida! Escolha outra.");
+            eventData.pointerDrag = null; // <-- MATA O ARRASTO AQUI TAMBÉM!
+            return;
+        }
+
         parentOriginal = transform.parent; 
         indiceOriginal = transform.GetSiblingIndex(); 
         posicaoOriginal = transform.localPosition; 

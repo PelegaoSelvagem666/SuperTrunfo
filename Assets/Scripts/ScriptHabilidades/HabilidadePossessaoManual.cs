@@ -34,6 +34,16 @@ public class HabilidadePossessaoManual : HabilidadeBase
             int valorInimiga = melhorInimiga != null ? Somar(melhorInimiga) : -1;
 
             cartaMortaEscolhida = valorAliada >= valorInimiga ? melhorAliada : melhorInimiga;
+
+            // --- AVISO VISUAL PARA VOCÊ VER A JOGADA DO BOT ---
+            if (cartaMortaEscolhida != null && gm.textoAvisoIA != null)
+            {
+                gm.textoAvisoIA.text = $"<size=40>Possessão Sombria!</size>\nO Oponente encarnou o espírito de {cartaMortaEscolhida.cardData.nomeCarta}!";
+                gm.textoAvisoIA.gameObject.SetActive(true);
+                
+                // Dá um tempo de 2.5 segundos para você ver o desespero chegando
+                yield return new WaitForSeconds(2.5f); 
+            }
         }
 
         if (cartaMortaEscolhida != null)
